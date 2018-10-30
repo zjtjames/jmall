@@ -7,11 +7,11 @@ public interface CartMapper {
 
     int insert(Cart record);
 
-    int insertSelective(Cart record); // 根据选择的进行插入
+    int insertSelective(Cart record); // 有字段的空判断，非空才插入
 
     Cart selectByPrimaryKey(Integer id);
 
-    int updateByPrimaryKeySelective(Cart record);
+    int updateByPrimaryKeySelective(Cart record); // 有字段的空判断，非空才插入
 
     int updateByPrimaryKey(Cart record);
 }
