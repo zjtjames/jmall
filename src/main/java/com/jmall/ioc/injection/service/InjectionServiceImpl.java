@@ -9,7 +9,7 @@ public class InjectionServiceImpl implements InjectionService {
 
     private InjectionDAO injectionDAO;
 
-    // 设置注入
+    // 设值注入
     public void setInjectionDAO(InjectionDAO injectionDAO) {
         this.injectionDAO = injectionDAO;
     }
