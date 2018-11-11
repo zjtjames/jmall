@@ -3,7 +3,7 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd"
-        default-autowire="constructor">
+        default-autowire="byType">
 
          <!--<bean id="injectionService" class="com.jmall.ioc.injection.service.InjectionServiceImpl">-->
             <!--<property name="injectionDAO" ref="injectionDAO"></property>-->

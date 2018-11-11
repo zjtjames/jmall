@@ -7,11 +7,11 @@ public class AutoWiringService {
 
     private AutoWiringDao autoWiringDao;
 
-    public AutoWiringService(AutoWiringDao autoWiringDao) {
-        System.out.println("AutoWiringServiceConstructor");
-        this.autoWiringDao = autoWiringDao;
-
-    }
+//    public AutoWiringService(AutoWiringDao autoWiringDao) {
+//        System.out.println("AutoWiringServiceConstructor");
+//        this.autoWiringDao = autoWiringDao;
+//
+//    }
 
     public void setAutoWiringDao(AutoWiringDao autoWiringDao) {
         System.out.println("setAutoWiringDao");

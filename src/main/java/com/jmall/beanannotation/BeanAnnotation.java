@@ -6,7 +6,7 @@ package com.jmall.beanannotation;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-@Scope("prototype")
+//@Scope("prototype")
 @Component("guaguagua")
 public class BeanAnnotation {
 
