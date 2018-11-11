@@ -6,13 +6,13 @@ package com.jmall.beanannotation.injection.dao;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Repository;
 
-@Order(2)
+@Order(1)
 @Repository
-public class InjectionDAOImpl implements InjectionDAO {
+public class InjectionDAOImpl2 implements InjectionDAO {
 
     @Override
     // 模拟数据库保存操作
     public void save(String arg) {
-        System.out.println("dao1保存数据:" + arg);
+        System.out.println("dao2保存数据:" + arg);
     }
 }
