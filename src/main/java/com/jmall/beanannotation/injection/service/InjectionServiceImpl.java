@@ -5,8 +5,11 @@ package com.jmall.beanannotation.injection.service;
 
 import com.jmall.beanannotation.injection.dao.InjectionDAO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -42,6 +45,10 @@ public class InjectionServiceImpl implements InjectionService {
     @Autowired
     private Map<String, InjectionDAO> map;
 
+    @Autowired
+    @Qualifier("injectionDAOImpl2")
+    private InjectionDAO injectionDAO;
+
     @Override
     public void save(String arg) {
         if (!list.isEmpty()) {
@@ -63,5 +70,9 @@ public class InjectionServiceImpl implements InjectionService {
         } else {
             System.out.println("List<InjectionDAO> list is null");
         }
+
+        System.out.println();
+
+        System.out.println("injectionDAO: " + injectionDAO.getClass().getName());
     }
 }
