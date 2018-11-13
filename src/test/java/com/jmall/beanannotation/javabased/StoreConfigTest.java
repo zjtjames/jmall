@@ -17,4 +17,10 @@ public class StoreConfigTest extends UnitTestBase{
         System.out.println(store.getClass().getName());
     }
 
+    @Test
+    public void testMyDriverManager() {
+        MyDriverManager manager = super.getBean("myDriverManager");
+        System.out.println(manager.getClass().getName());
+    }
+
 }

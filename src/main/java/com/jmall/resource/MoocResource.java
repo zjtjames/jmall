@@ -23,7 +23,7 @@ public class MoocResource implements ApplicationContextAware{
 
 
     public void resource() throws IOException {
-        Resource resource = applicationContext.getResource("config.txt");
+        Resource resource = applicationContext.getResource("config.properties");
         System.out.println(resource.getFilename());
         System.out.println(resource.contentLength());
     }
