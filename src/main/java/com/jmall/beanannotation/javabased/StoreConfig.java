@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
+import org.springframework.context.annotation.Scope;
 
 @Configuration
 @ImportResource("classpath:config.xml")
@@ -27,10 +28,11 @@ public class StoreConfig {
         return new MyDriverManager(url, username, password);
     }
 
-//    @Bean(name = "store", initMethod = "init", destroyMethod = "destroy")
-//    public Store getStringStore() {
-//        return new StringStore();
-//    }
+    @Bean(name = "store", initMethod = "init", destroyMethod = "destroy")
+    @Scope(value = "prototype")
+    public Store getStringStore() {
+        return new StringStore();
+    }
 
 
 }

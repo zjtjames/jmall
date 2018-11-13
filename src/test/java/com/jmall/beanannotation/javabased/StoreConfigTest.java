@@ -14,7 +14,10 @@ public class StoreConfigTest extends UnitTestBase{
     @Test
     public void test() {
         Store store = super.getBean("store");
-        System.out.println(store.getClass().getName());
+        System.out.println(store.hashCode());
+
+        Store store1 = super.getBean("store");
+        System.out.println(store1.hashCode());
     }
 
     @Test
