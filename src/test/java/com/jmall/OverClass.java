@@ -3,7 +3,7 @@
  */
 package com.jmall;
 
-public class OverClass<T> { //   定义泛型类
+public class OverClass<T> { //定义泛型类
 
     private T over;
     private T[] array;
