@@ -20,8 +20,8 @@
                     </list>
                 </property>
             </bean>
-            <!--springmvc进行自动反序列化-->
-            <bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
+            <!--springmvc进行自动序列化-->
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
                 <property name="supportedMediaTypes">
                     <list>
                         <value>application/json;charset=UTF-8</value>
