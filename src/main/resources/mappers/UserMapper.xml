@@ -151,4 +151,11 @@
       update_time = now()
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="checkUsername" parameterType="string" resultType="int">
+    SELECT count(1) from jmall_user
+--     #{}中是传进来的参数
+    WHERE username = #{username}
+  </select>
+
 </mapper>
