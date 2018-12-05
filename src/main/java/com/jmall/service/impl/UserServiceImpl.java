@@ -16,6 +16,15 @@ public class UserServiceImpl implements IUserService{
 
     @Override
     public ServerResponse<User> login(String username, String password) {
+        // 看用户是否存在
+        int resultCount = userMapper.checkUsername(username);
+        if (resultCount == 0) {
+            return ServerResponse.createByErrorMessage("用户名不存在");
+        }
+
+        //todo 密码登录MD5 让密码在数据库中不明文保存
+
+
         return null;
     }
 }

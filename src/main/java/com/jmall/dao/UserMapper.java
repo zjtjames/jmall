@@ -1,6 +1,7 @@
 package com.jmall.dao;
 
 import com.jmall.pojo.User;
+import org.apache.ibatis.annotations.Param;
 
 public interface UserMapper {
     int deleteByPrimaryKey(Integer id);
@@ -17,4 +18,7 @@ public interface UserMapper {
 
     // 看用户是否已经存在
     int checkUsername(String username);
+
+    // mybatis在传递多个参数时要用@Param注解 注解的内容就是sql中的引用名
+    User selectLogin(@Param("username") String username, @Param("password") String password);
 }
