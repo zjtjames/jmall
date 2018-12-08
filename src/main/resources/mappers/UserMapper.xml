@@ -158,8 +158,11 @@
     WHERE username = #{username}
   </select>
 
-  <select id="selectLogin" >
-
+  <select id="selectLogin" resultMap="BaseResultMap" parameterType="map">
+    <include refid="Base_Column_List"/>
+    FROM jmall_user
+    WHERE username = #{username1}
+    and password = #{password1}
   </select>
 
 </mapper>

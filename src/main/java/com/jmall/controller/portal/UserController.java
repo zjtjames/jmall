@@ -3,6 +3,10 @@
  */
 package com.jmall.controller.portal;
 
+import com.jmall.common.ServerResponse;
+import com.jmall.pojo.User;
+import com.jmall.service.IUserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,6 +18,9 @@ import javax.servlet.http.HttpSession;
 @RequestMapping("/user/")
 public class UserController {
 
+    @Autowired  //依赖注入
+    private IUserService iUserService;
+
     /**
      * 用户登录
      * @param username
@@ -23,9 +30,12 @@ public class UserController {
      */
     @RequestMapping(value = "login.do",method = RequestMethod.POST)
     @ResponseBody // 自动通过springmvc的jackson插件自动将返回值序列化为json
-    public Object login(String username, String password, HttpSession session) {
+    public ServerResponse<User> login(String username, String password, HttpSession session) {
+        ServerResponse<User> response = iUserService.login(username, password);
+        if (response.isSuccess()) {
 
-        //service-->mybatis->dao
+        }
+
         return null;
     }
 }
