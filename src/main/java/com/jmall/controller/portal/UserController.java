@@ -48,6 +48,6 @@ public class UserController {
     }
 
     public ServerResponse<String> register(User user) {
-
+        return null;
     }
 }

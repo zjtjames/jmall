@@ -50,7 +50,7 @@ public class UserServiceImpl implements IUserService{
             return ServerResponse.createByErrorMessage("email已存在");
         }
         user.setRole(Const.Role.ROLE_CUSTOMER);
-        // MD5非对称加密 在数据库中不能存明文的密码
-
-
+        //todo MD5非对称加密 在数据库中不能存明文的密码
+        return null;
+    }
 }
