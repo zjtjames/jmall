@@ -29,7 +29,7 @@ public class UserController {
      * @param session
      * @return
      */
-    @RequestMapping(value = "login.do",method = RequestMethod.POST)
+    @RequestMapping(value = "login.do",method = RequestMethod.POST) // 登录
     @ResponseBody // 自动通过springmvc的jackson插件自动将返回值序列化为json
     public ServerResponse<User> login(String username, String password, HttpSession session) {
         ServerResponse<User> response = iUserService.login(username, password);
@@ -37,5 +37,17 @@ public class UserController {
             session.setAttribute(Const.CURRENT_USER, response.getData());
         }
         return response;
+    }
+
+    @RequestMapping(value = "logout.do",method = RequestMethod.GET) // 登出
+    @ResponseBody // 自动通过springmvc的jackson插件自动将返回值序列化为json
+    public ServerResponse<String> logout(HttpSession session) {
+       // 登出就是在session中把添加的currentUser删除掉
+        session.removeAttribute(Const.CURRENT_USER);
+        return ServerResponse.createBySuccess();
+    }
+
+    public ServerResponse<String> register(User user) {
+
     }
 }

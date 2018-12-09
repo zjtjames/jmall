@@ -3,6 +3,7 @@
  */
 package com.jmall.service.impl;
 
+import com.jmall.common.Const;
 import com.jmall.common.ServerResponse;
 import com.jmall.dao.UserMapper;
 import com.jmall.pojo.User;
@@ -18,7 +19,7 @@ public class UserServiceImpl implements IUserService{
     private UserMapper userMapper;
 
     @Override
-    public ServerResponse<User> login(String username, String password) {
+    public ServerResponse<User> login(String username, String password) { //登录
         // 看用户是否存在
         int resultCount = userMapper.checkUsername(username);
         if (resultCount == 0) {
@@ -35,4 +36,21 @@ public class UserServiceImpl implements IUserService{
         user.setPassword(StringUtils.EMPTY);
         return ServerResponse.createBySuccess("登录成功", user);
     }
+
+
+    public ServerResponse<String> register(User user) { //注册
+        // 看用户是否存在
+        int resultCount = userMapper.checkUsername(user.getUsername());
+        if (resultCount > 0) {
+            return ServerResponse.createByErrorMessage("用户名已存在"); // 调用静态方法不用初始化类
+        }
+        // 看email是否存在
+        resultCount = userMapper.checkEmail(user.getEmail());
+        if (resultCount > 0) {
+            return ServerResponse.createByErrorMessage("email已存在");
+        }
+        user.setRole(Const.Role.ROLE_CUSTOMER);
+        // MD5非对称加密 在数据库中不能存明文的密码
+
+
 }
