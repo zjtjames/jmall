@@ -3,6 +3,7 @@
  */
 package com.jmall.controller.portal;
 
+import com.jmall.common.Const;
 import com.jmall.common.ServerResponse;
 import com.jmall.pojo.User;
 import com.jmall.service.IUserService;
@@ -33,9 +34,8 @@ public class UserController {
     public ServerResponse<User> login(String username, String password, HttpSession session) {
         ServerResponse<User> response = iUserService.login(username, password);
         if (response.isSuccess()) {
-
+            session.setAttribute(Const.CURRENT_USER, response.getData());
         }
-
-        return null;
+        return response;
     }
 }

@@ -3,6 +3,7 @@ package com.jmall.common;
 // 使用枚举类来定义常量 相应编码的枚举类 以后扩展很方便
 public enum ResponseCode {
 
+    // 下面四行是枚举类的实例 相当于new一个class
     SUCCESS(0, "SUCCESS"),
     ERROR(1, "ERROR"),
     NEED_LOGIN(10, "NEED_LOGIN"),
