@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Param;
 public interface UserMapper {
     int deleteByPrimaryKey(Integer id);
 
-    int insert(User record);
+    int insert(User record); // 返回值是生效的行数
 
     int insertSelective(User record);
 

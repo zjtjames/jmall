@@ -8,6 +8,7 @@ import com.jmall.common.ServerResponse;
 import com.jmall.dao.UserMapper;
 import com.jmall.pojo.User;
 import com.jmall.service.IUserService;
+import com.jmall.util.MD5Util;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,9 +27,9 @@ public class UserServiceImpl implements IUserService{
             return ServerResponse.createByErrorMessage("用户名不存在"); // 调用静态方法不用初始化类
         }
 
-        //todo 密码登录MD5 让密码在数据库中不明文保存
-
-        User user = userMapper.selectLogin(username, password);
+        // 登录密码MD5 数据库中存的是转换成MD5后的密码
+        String md5Password = MD5Util.MD5EncodeUtf8(password);
+        User user = userMapper.selectLogin(username, md5Password);
         if (user == null) {
             return ServerResponse.createByErrorMessage("密码错误");
         }
@@ -50,7 +51,14 @@ public class UserServiceImpl implements IUserService{
             return ServerResponse.createByErrorMessage("email已存在");
         }
         user.setRole(Const.Role.ROLE_CUSTOMER);
-        //todo MD5非对称加密 在数据库中不能存明文的密码
-        return null;
+        // MD5加密 在数据库中不能存明文的密码
+        user.setPassword(MD5Util.MD5EncodeUtf8(user.getPassword()));
+        // 在数据库中插入用户
+        resultCount = userMapper.insert(user);
+        if (resultCount == 0) {
+            return ServerResponse.createByErrorMessage("注册失败");
+        }
+        return ServerResponse.createBySuccessMessage("注册成功");
+
     }
 }

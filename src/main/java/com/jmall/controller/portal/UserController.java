@@ -47,7 +47,9 @@ public class UserController {
         return ServerResponse.createBySuccess();
     }
 
+    @RequestMapping(value = "register.do",method = RequestMethod.GET) // 注册
+    @ResponseBody // 自动通过springmvc的jackson插件自动将返回值序列化为json
     public ServerResponse<String> register(User user) {
-        return null;
+        return iUserService.register(user);
     }
 }
