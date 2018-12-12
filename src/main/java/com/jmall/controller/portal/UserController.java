@@ -53,7 +53,9 @@ public class UserController {
         return iUserService.register(user);
     }
 
+    @RequestMapping(value = "check_valid.do",method = RequestMethod.GET) // 注册
+    @ResponseBody // 自动通过springmvc的jackson插件自动将返回值序列化为json
     public ServerResponse<String> checkValid(String str, String type) {
-
+        return iUserService.checkValid(str, type);
     }
 }

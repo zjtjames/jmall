@@ -9,4 +9,6 @@ public interface IUserService {
     ServerResponse<User> login(String username, String password); //登录
 
     ServerResponse<String> register(User user); // 注册
+
+    ServerResponse<String> checkValid(String str, String type); // 校验是否已存在
 }
