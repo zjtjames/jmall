@@ -158,16 +158,29 @@
     WHERE username = #{username}
   </select>
 
+  <!--多个参数 parameterType要用map-->
   <select id="selectLogin" resultMap="BaseResultMap" parameterType="map">
     <include refid="Base_Column_List"/>
     FROM jmall_user
     WHERE username = #{username1}
     and password = #{password1}
   </select>
-  
+
   <select id="checkEmail" resultType="int" parameterType="string">
     SELECT COUNT (1) FROM jmall_user
     WHERE email = #{email}
+  </select>
+  
+  <select id="selectQuestionByUsername" resultType="string" parameterType="string">
+    SELECT question FROM jmall_user
+    WHERE username = #{username}
+  </select>
+
+  <select id="checkAnswer" resultType="int" parameterType="map">
+    SELECT count(1) FROM jmall_user
+    WHERE username = #{username1}
+    and question = #{question1}
+    and answer = #{answer1}
   </select>
 
 </mapper>

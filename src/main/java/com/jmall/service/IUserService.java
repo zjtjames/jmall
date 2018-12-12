@@ -11,4 +11,6 @@ public interface IUserService {
     ServerResponse<String> register(User user); // 注册
 
     ServerResponse<String> checkValid(String str, String type); // 校验是否已存在
+
+    ServerResponse<String> selectQuestion(String username); // 获取密码找回问题
 }

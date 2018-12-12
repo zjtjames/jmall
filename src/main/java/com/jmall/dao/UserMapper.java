@@ -25,4 +25,10 @@ public interface UserMapper {
     // 看邮箱是否已经存在
     int checkEmail(String email);
 
+    // 根据用户名获取密码重置问题
+    String selectQuestionByUsername(String username);
+
+    // mybatis在传递多个参数时要用@Param注解 注解的内容就是sql中的引用名
+    int checkAnswer(@Param("username1")String username, @Param("question1")String question, @Param("answer1")String answer);
+
 }
