@@ -19,6 +19,7 @@ public interface UserMapper {
     // 看用户是否已经存在
     int checkUsername(String username);
 
+    // 登录
     // mybatis在传递多个参数时要用@Param注解 注解的内容就是sql中的引用名
     User selectLogin(@Param("username1") String username, @Param("password1") String password);
 

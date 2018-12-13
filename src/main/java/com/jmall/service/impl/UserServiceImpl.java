@@ -13,6 +13,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service("iUserService")
 public class UserServiceImpl implements IUserService{
 
@@ -101,7 +103,10 @@ public class UserServiceImpl implements IUserService{
         int resultCount = userMapper.checkAnswer(username, question, answer);
         if (resultCount > 0) {
             // 说明问题及问题答案是这个用户的，并且是正确的
+            String forgetToken = UUID.randomUUID().toString();
         }
+        return null;
 
     }
+
 }

@@ -43,7 +43,7 @@ public class UserController {
     @RequestMapping(value = "logout.do",method = RequestMethod.GET) // 登出
     @ResponseBody // 自动通过springmvc的jackson插件自动将返回值序列化为json
     public ServerResponse<String> logout(HttpSession session) {
-       // 登出就是在session中把添加的currentUser删除掉
+        // 登出就是在session中把添加的currentUser删除掉
         session.removeAttribute(Const.CURRENT_USER);
         return ServerResponse.createBySuccess();
     }
@@ -78,7 +78,7 @@ public class UserController {
 
     // 校验问题答案是否正确
     public ServerResponse<String> forgetCheckAnswer(String username, String question, String answer) {
-
+        return null;
     }
 
 }
