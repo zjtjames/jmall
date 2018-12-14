@@ -15,4 +15,6 @@ public interface IUserService {
     ServerResponse<String> selectQuestion(String username); // 获取密码找回问题
 
     ServerResponse<String> checkAnswer(String username, String question, String answer); // 检验密码找回答案是否正确
+
+    ServerResponse<String> forgetResetPassword(String username, String passwordNew, String forgetToken); // 忘记密码中的重置密码
 }

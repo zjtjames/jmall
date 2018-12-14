@@ -182,5 +182,11 @@
     and question = #{question1}
     and answer = #{answer1}
   </select>
+  
+  <update id="updatePasswordByUsername" parameterType="map">
+    UPDATE jmall_user
+    SET password = #{passwordNew1}, update_time = now()
+    where username = #{username1}
+  </update>
 
 </mapper>

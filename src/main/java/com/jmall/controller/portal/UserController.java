@@ -83,4 +83,10 @@ public class UserController {
         return iUserService.checkAnswer(username, question, answer);
     }
 
+    @RequestMapping(value = "forget_reset_password.do", method = RequestMethod.GET) // 忘记密码中的重置密码
+    @ResponseBody // 自动通过springmvc的jackson插件自动将返回值序列化为json
+    public ServerResponse<String> forgetResetPassword(String username, String passwordNew, String forgetToken) {
+        return iUserService.forgetResetPassword(username, passwordNew, forgetToken);
+    }
+
 }

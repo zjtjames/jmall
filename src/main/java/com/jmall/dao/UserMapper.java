@@ -30,6 +30,10 @@ public interface UserMapper {
     String selectQuestionByUsername(String username);
 
     // mybatis在传递多个参数时要用@Param注解 注解的内容就是sql中的引用名
+    // 校验答案
     int checkAnswer(@Param("username1")String username, @Param("question1")String question, @Param("answer1")String answer);
+
+    // 更新密码
+    int updatePasswordByUsername(@Param("username1")String username, @Param("passwordNew1")String passwordNew);
 
 }
