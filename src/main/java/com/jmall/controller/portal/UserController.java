@@ -76,9 +76,11 @@ public class UserController {
         return iUserService.selectQuestion(username);
     }
 
-    // 校验问题答案是否正确
+
+    @RequestMapping(value = "forget_check_answer.do",method = RequestMethod.GET) // 校验问题答案是否正确
+    @ResponseBody // 自动通过springmvc的jackson插件自动将返回值序列化为json
     public ServerResponse<String> forgetCheckAnswer(String username, String question, String answer) {
-        return null;
+        return iUserService.checkAnswer(username, question, answer);
     }
 
 }

@@ -13,4 +13,6 @@ public interface IUserService {
     ServerResponse<String> checkValid(String str, String type); // 校验是否已存在
 
     ServerResponse<String> selectQuestion(String username); // 获取密码找回问题
+
+    ServerResponse<String> checkAnswer(String username, String question, String answer); // 检验密码找回答案是否正确
 }

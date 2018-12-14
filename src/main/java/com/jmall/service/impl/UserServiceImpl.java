@@ -5,6 +5,7 @@ package com.jmall.service.impl;
 
 import com.jmall.common.Const;
 import com.jmall.common.ServerResponse;
+import com.jmall.common.TokenCache;
 import com.jmall.dao.UserMapper;
 import com.jmall.pojo.User;
 import com.jmall.service.IUserService;
@@ -104,9 +105,10 @@ public class UserServiceImpl implements IUserService{
         if (resultCount > 0) {
             // 说明问题及问题答案是这个用户的，并且是正确的
             String forgetToken = UUID.randomUUID().toString();
+            TokenCache.setKey("token_" + username, forgetToken);
+            return ServerResponse.createBySuccess(forgetToken);
         }
-        return null;
-
+        return ServerResponse.createByErrorMessage("问题的答案错误");
     }
 
 }
