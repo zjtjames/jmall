@@ -160,6 +160,7 @@
 
   <!--多个参数 parameterType要用map-->
   <select id="selectLogin" resultMap="BaseResultMap" parameterType="map">
+    SELECT
     <include refid="Base_Column_List"/>
     FROM jmall_user
     WHERE username = #{username1}

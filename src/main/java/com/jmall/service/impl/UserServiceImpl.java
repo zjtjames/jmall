@@ -136,4 +136,8 @@ public class UserServiceImpl implements IUserService{
         return ServerResponse.createByErrorMessage("修改密码失败");
     }
 
+    public ServerResponse<String> resetPassword(String passwordOld, String passwordNew, User user) {
+
+    }
+
 }

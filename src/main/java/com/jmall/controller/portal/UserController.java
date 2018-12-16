@@ -70,7 +70,7 @@ public class UserController {
         return ServerResponse.createByErrorMessage("用户未登录，无法获取当前用户的信息");
     }
 
-    @RequestMapping(value = "forget_get_question.do",method = RequestMethod.GET) // 获取用户登录信息
+    @RequestMapping(value = "forget_get_question.do",method = RequestMethod.GET) // 获取修改密码问题
     @ResponseBody // 自动通过springmvc的jackson插件自动将返回值序列化为json
     public ServerResponse<String> forgetGetQuestion(String username) {
         return iUserService.selectQuestion(username);
@@ -88,5 +88,14 @@ public class UserController {
     public ServerResponse<String> forgetResetPassword(String username, String passwordNew, String forgetToken) {
         return iUserService.forgetResetPassword(username, passwordNew, forgetToken);
     }
+
+    public ServerResponse<String> resetPassword(HttpSession session, String passwordOld, String passwordNew) { // 因为要判断登录状态 所以要传入httpsession
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        if (user == null) {
+            return ServerResponse.createByErrorMessage("用户未登录");
+        }
+    }
+
+
 
 }
