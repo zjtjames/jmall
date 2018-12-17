@@ -12,6 +12,7 @@ public interface UserMapper {
 
     User selectByPrimaryKey(Integer id);
 
+    // where条件只有一个id
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
@@ -35,5 +36,11 @@ public interface UserMapper {
 
     // 更新密码
     int updatePasswordByUsername(@Param("username1")String username, @Param("passwordNew1")String passwordNew);
+
+    // 校验密码
+    int checkPassword(@Param("password1") String password, @Param("userId1") Integer userId);
+
+    // 看email是否已被其他人占用
+    int checkEmailByUserId(@Param("email1")String email, @Param("userId1")Integer userId);
 
 }

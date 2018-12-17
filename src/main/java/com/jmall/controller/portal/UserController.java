@@ -89,11 +89,24 @@ public class UserController {
         return iUserService.forgetResetPassword(username, passwordNew, forgetToken);
     }
 
+    @RequestMapping(value = "reset_password.do", method = RequestMethod.GET) // 登录状态的重置密码
+    @ResponseBody // 自动通过springmvc的jackson插件自动将返回值序列化为json
     public ServerResponse<String> resetPassword(HttpSession session, String passwordOld, String passwordNew) { // 因为要判断登录状态 所以要传入httpsession
-        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        User user = (User) session.getAttribute(Const.CURRENT_USER); // 登录的时候把user存进了session
         if (user == null) {
             return ServerResponse.createByErrorMessage("用户未登录");
         }
+        return iUserService.resetPassword(passwordOld, passwordNew, user);
+    }
+
+    public ServerResponse<User> update_information(HttpSession session, User user) { // 传进来的user带的属性是邮箱、电话、问题等 里面不含userId
+        User currentUser = (User) session.getAttribute(Const.CURRENT_USER);
+        if (currentUser == null) {
+            return ServerResponse.createByErrorMessage("用户未登录");
+        }
+        user.setId(currentUser.getId());
+
+
     }
 
 

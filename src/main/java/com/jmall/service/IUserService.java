@@ -17,4 +17,6 @@ public interface IUserService {
     ServerResponse<String> checkAnswer(String username, String question, String answer); // 检验密码找回答案是否正确
 
     ServerResponse<String> forgetResetPassword(String username, String passwordNew, String forgetToken); // 忘记密码中的重置密码
+
+    ServerResponse<String> resetPassword(String passwordOld, String passwordNew, User user); // 登录状态下修改密码
 }

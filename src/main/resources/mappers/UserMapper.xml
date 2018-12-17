@@ -190,4 +190,17 @@
     where username = #{username1}
   </update>
 
+  <select id="checkPassword" resultType="int" parameterType="map">
+    SELECT
+    count(1)
+    FROM jmall_user
+    WHERE id = #{userId1}
+    and password = #{password1}
+  </select>
+
+  <select id="checkEmailByUserId" resultType="int" parameterType="map">
+    SELECT count(1) FROM jmall_user
+    WHERE email = #{email1}
+    and id != #{userId1}
+  </select>
 </mapper>

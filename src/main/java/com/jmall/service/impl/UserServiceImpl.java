@@ -137,7 +137,23 @@ public class UserServiceImpl implements IUserService{
     }
 
     public ServerResponse<String> resetPassword(String passwordOld, String passwordNew, User user) {
+        // 防止横向越权，要校验一下这个用户的旧密码对应这个用户，
+        int resultCount = userMapper.checkPassword(MD5Util.MD5EncodeUtf8(passwordOld), user.getId());
+        if (resultCount == 0) {
+            return ServerResponse.createByErrorMessage("旧密码错误");
+        }
+        user.setPassword(MD5Util.MD5EncodeUtf8(passwordNew));
+        int updateCount = userMapper.updateByPrimaryKeySelective(user);
+        if (updateCount > 0) {
+            return ServerResponse.createBySuccessMessage("密码更新成功");
+        }
+        return ServerResponse.createByErrorMessage("密码更新失败");
+    }
 
+    public ServerResponse<User> updateInformation(User user) {
+        // username不能被更新
+        // email也要进行校验，校验新的email是不是已经存在，并且如果email已存在的话，是不是当前用户的eamil
+        int resultCount = userMapper
     }
 
 }
