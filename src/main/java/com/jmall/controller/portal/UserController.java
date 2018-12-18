@@ -99,14 +99,21 @@ public class UserController {
         return iUserService.resetPassword(passwordOld, passwordNew, user);
     }
 
-    public ServerResponse<User> update_information(HttpSession session, User user) { // 传进来的user带的属性是邮箱、电话、问题等 里面不含userId
+    @RequestMapping(value = "update_information.do", method = RequestMethod.GET) // 登录状态下更新用户信息
+    @ResponseBody // 自动通过springmvc的jackson插件自动将返回值序列化为json
+    public ServerResponse<User> updateInformation(HttpSession session, User user) { // 传进来的user带的属性是要更新的邮箱、电话、问题等 里面不含userId
         User currentUser = (User) session.getAttribute(Const.CURRENT_USER);
         if (currentUser == null) {
             return ServerResponse.createByErrorMessage("用户未登录");
         }
         user.setId(currentUser.getId());
-
-
+        user.setUsername(currentUser.getUsername()); // 密码不存入session中
+        ServerResponse<User> response = iUserService.updateInformation(user);
+        // 更新session
+        if (response.isSuccess()) {
+            session.setAttribute(Const.CURRENT_USER, response.getData());
+        }
+        return response;
     }
 
 

@@ -38,7 +38,7 @@ public class UserServiceImpl implements IUserService{
         if (user == null) {
             return ServerResponse.createByErrorMessage("密码错误");
         }
-        // 匹配到了用户 把密码置空
+        // 匹配到了用户 把密码置空 密码不存到session中
         user.setPassword(StringUtils.EMPTY);
         return ServerResponse.createBySuccess("登录成功", user);
     }
