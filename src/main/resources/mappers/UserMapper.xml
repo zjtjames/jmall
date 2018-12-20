@@ -33,7 +33,7 @@
       email, phone, question, 
       answer, role, create_time, 
       update_time)
-    values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
       #{email,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{question,jdbcType=VARCHAR}, 
       #{answer,jdbcType=VARCHAR}, #{role,jdbcType=INTEGER}, now(),
       now())
@@ -154,7 +154,7 @@
 
   <select id="checkUsername" resultType="int" parameterType="string">
     SELECT count(1) from jmall_user
---     #{}中是传进来的参数
+    <!--#{}中是传进来的参数-->
     WHERE username = #{username}
   </select>
 
@@ -163,8 +163,8 @@
     SELECT
     <include refid="Base_Column_List"/>
     FROM jmall_user
-    WHERE username = #{username1}
-    and password = #{password1}
+    WHERE username = #{username}
+    and password = #{password}
   </select>
 
   <select id="checkEmail" resultType="int" parameterType="string">
@@ -179,23 +179,23 @@
 
   <select id="checkAnswer" resultType="int" parameterType="map">
     SELECT count(1) FROM jmall_user
-    WHERE username = #{username1}
-    and question = #{question1}
-    and answer = #{answer1}
+    WHERE username = #{username}
+    and question = #{q }
+    and answer = #{answer}
   </select>
   
   <update id="updatePasswordByUsername" parameterType="map">
     UPDATE jmall_user
-    SET password = #{passwordNew1}, update_time = now()
-    where username = #{username1}
+    SET password = #{passwordNew}, update_time = now()
+    where username = #{username}
   </update>
 
   <select id="checkPassword" resultType="int" parameterType="map">
     SELECT
     count(1)
     FROM jmall_user
-    WHERE id = #{userId1}
-    and password = #{password1}
+    WHERE id = #{userId}
+    and password = #{password}
   </select>
 
   <select id="checkEmailByUserId" resultType="int" parameterType="map">

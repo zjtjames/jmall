@@ -22,7 +22,7 @@ public interface UserMapper {
 
     // 登录
     // mybatis在传递多个参数时要用@Param注解 注解的内容就是sql中的引用名
-    User selectLogin(@Param("username1") String username, @Param("password1") String password);
+    User selectLogin(@Param("username") String username, @Param("password") String password);
 
     // 看邮箱是否已经存在
     int checkEmail(String email);
@@ -32,13 +32,13 @@ public interface UserMapper {
 
     // mybatis在传递多个参数时要用@Param注解 注解的内容就是sql中的引用名
     // 校验答案
-    int checkAnswer(@Param("username1")String username, @Param("question1")String question, @Param("answer1")String answer);
+    int checkAnswer(@Param("username")String username, @Param("question")String question, @Param("answer")String answer);
 
     // 更新密码
-    int updatePasswordByUsername(@Param("username1")String username, @Param("passwordNew1")String passwordNew);
+    int updatePasswordByUsername(@Param("username")String username, @Param("passwordNew")String passwordNew);
 
     // 校验密码
-    int checkPassword(@Param("password1") String password, @Param("userId1") Integer userId);
+    int checkPassword(@Param("password") String password, @Param("userId") Integer userId);
 
     // 看email是否已被其他人占用
     int checkEmailByUserId(@Param("email1")String email, @Param("userId1")Integer userId);
