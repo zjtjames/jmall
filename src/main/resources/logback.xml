@@ -12,9 +12,9 @@
 
     <appender name="jmall" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!--<File>d:/jmalllog/jmall.log</File>-->
-        <File>/developer/apache-tomcat-7.0.75/logs/jmall.log</File>
+        <File>E:/Program Files/Apache Software Foundation/apache-tomcat-7.0.75/logs/jmall.log</File>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>/developer/apache-tomcat-7.0.75/logs/jmall.log.%d{yyyy-MM-dd}.gz</fileNamePattern>
+            <fileNamePattern>E:/Program Files/Apache Software Foundation/apache-tomcat-7.0.75/logs/jmall.log.%d{yyyy-MM-dd}.gz</fileNamePattern>
             <append>true</append>
             <maxHistory>10</maxHistory>
         </rollingPolicy>
@@ -26,9 +26,10 @@
 
     <appender name="error" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!--<File>d:/jmalllog/error.log</File>-->
-        <File>/developer/apache-tomcat-7.0.73/logs/error.log</File>
+        <!--当天的是error.log 一天过完了会存成error.log.日期-->
+        <File>E:/Program Files/Apache Software Foundation/apache-tomcat-7.0.75/logs/error.log</File>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>/devsoft/apache-tomcat-7.0.73/logs/error.log.%d{yyyy-MM-dd}.gz</fileNamePattern>
+            <fileNamePattern>E:/Program Files/Apache Software Foundation/apache-tomcat-7.0.75/logs/error.log.%d{yyyy-MM-dd}.gz</fileNamePattern>
             <!--<fileNamePattern>d:/jmalllog/error.log.%d{yyyy-MM-dd}.gz</fileNamePattern>-->
             <append>true</append>
             <maxHistory>10</maxHistory>
