@@ -168,7 +168,7 @@
   </select>
 
   <select id="checkEmail" resultType="int" parameterType="string">
-    SELECT COUNT (1) FROM jmall_user
+    SELECT COUNT(1) FROM jmall_user
     WHERE email = #{email}
   </select>
   
