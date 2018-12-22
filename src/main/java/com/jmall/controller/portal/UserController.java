@@ -34,8 +34,8 @@ public class UserController {
      */
     @RequestMapping(value = "login.do",method = RequestMethod.POST) // 登录
     @ResponseBody // 自动通过springmvc的jackson插件自动将返回值序列化为json
-    public ServerResponse<User> login(String username, String password, HttpSession session) {
-        ServerResponse<User> response = iUserService.login(username, password);
+    public ServerResponse<User> login(String username1, String password, HttpSession session) {
+        ServerResponse<User> response = iUserService.login(username1, password);
         if (response.isSuccess()) {
             session.setAttribute(Const.CURRENT_USER, response.getData());
         }
