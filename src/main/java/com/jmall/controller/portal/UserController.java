@@ -9,6 +9,7 @@ import com.jmall.common.ServerResponse;
 import com.jmall.pojo.User;
 import com.jmall.service.IUserService;
 import net.sf.jsqlparser.schema.Server;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -66,6 +67,7 @@ public class UserController {
     public ServerResponse<User> getUserInfo(HttpSession session) {
         User user = (User) session.getAttribute(Const.CURRENT_USER);
         if (user != null) {
+            user.setPassword(StringUtils.EMPTY);
             return ServerResponse.createBySuccess(user);
         }
         return ServerResponse.createByErrorMessage("用户未登录，无法获取当前用户的信息");
@@ -124,7 +126,8 @@ public class UserController {
         if (currentUser == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "未登录，需要强制登录status=10");
         }
-        return iUserService.getInformation(currentUser.getId());
+//        return iUserService.getInformation(currentUser.getId());
+        return getUserInfo(session);
     }
 
 
