@@ -23,4 +23,6 @@ public interface IUserService {
     ServerResponse<User> updateInformation(User user); //登录状态下修改个人信息
 
 //    ServerResponse<User> getInformation(Integer userId); // 获取当前登录用户的详细信息
+
+    ServerResponse checkAdminRole(User user); // 校验是否是管理员
 }
