@@ -3,6 +3,7 @@
  */
 package com.jmall.service.impl;
 
+import com.google.common.collect.Sets;
 import com.jmall.common.ServerResponse;
 import com.jmall.dao.CategoryMapper;
 import com.jmall.pojo.Category;
@@ -14,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -66,6 +68,7 @@ public class CategoryServiceImpl implements ICategoryService{
     }
 
     public ServerResponse getCategoryAndChildrenById(Integer categoryId) {
+        Set<Category> categorySet = Sets.newHashSet();
 
     }
 
@@ -77,10 +80,11 @@ public class CategoryServiceImpl implements ICategoryService{
         }
         // 查找子节点 递归算法一定要有一个退出条件
         List<Category> categoryList = categoryMapper.selectCategoryChildrenByParentId(categoryId);
-        // 因为mybatis对返回集合的设定的是 如果没有查到不会返回null 所以这里不用进行空判断
+        // 因为mybatis对返回集合的设定的是 如果没有查到不会返回null 所以这里不用进行空判断 如果没查到 for就进不去 递归就结束
         for (Category categoryItem : categoryList) {
-
+            findChildrenCategory(categorySet, categoryItem.getId());
         }
+        return categorySet;
 
     }
 
