@@ -34,4 +34,20 @@ public class CategoryServiceImpl implements ICategoryService{
         return ServerResponse.createByErrorMessage("添加品类失败");
     }
 
+    public ServerResponse updateCategoryName(Integer categoryId, String categoryName) {
+        if (categoryId == null || StringUtils.isBlank(categoryName)) {
+            return ServerResponse.createByErrorMessage("更新品类参数错误");
+        }
+        Category category = new Category();
+        category.setId(categoryId); // 为什么把id传进来 因为有选择性的更新是通过主键id进行更新的
+        category.setName(categoryName);
+
+        int rowCount = categoryMapper.updateByPrimaryKeySelective(category);
+        if (rowCount > 0) {
+            return ServerResponse.createBySuccessMessage("更新品类名成功");
+        }
+        return ServerResponse.createByErrorMessage("更新品类名失败");
+
+    }
+
 }
