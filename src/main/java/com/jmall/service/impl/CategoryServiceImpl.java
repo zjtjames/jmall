@@ -69,6 +69,19 @@ public class CategoryServiceImpl implements ICategoryService{
 
     }
 
-    private Set<Category>
+    // 递归算法 算出子节点
+    private Set<Category> findChildrenCategory(Set<Category> categorySet, Integer categoryId) {
+        Category category = categoryMapper.selectByPrimaryKey(categoryId);
+        if (category != null) {
+            categorySet.add(category);
+        }
+        // 查找子节点 递归算法一定要有一个退出条件
+        List<Category> categoryList = categoryMapper.selectCategoryChildrenByParentId(categoryId);
+        // 因为mybatis对返回集合的设定的是 如果没有查到不会返回null 所以这里不用进行空判断
+        for (Category categoryItem : categoryList) {
+
+        }
+
+    }
 
 }
