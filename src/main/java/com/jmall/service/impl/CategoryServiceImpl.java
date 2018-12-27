@@ -85,8 +85,8 @@ public class CategoryServiceImpl implements ICategoryService{
         return ServerResponse.createBySuccess(categoryIdList);
     }
 
-    // 递归算法 算出子节点
-    private void findChildrenCategory(Set<Category> categorySet, Integer categoryId) {
+    // 递归算法 算出子节点 广度优先
+    private void findChildrenCategory(Set<Category> categorySet, Integer categoryId) { //利用副作用改变categorySet
         Category category = categoryMapper.selectByPrimaryKey(categoryId);
         if (category != null) {
             categorySet.add(category);
