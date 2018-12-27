@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -67,13 +68,25 @@ public class CategoryServiceImpl implements ICategoryService{
         return ServerResponse.createBySuccess(categoryList);
     }
 
+    /**
+     * 递归查询本节点及孩子节点的id
+     * @param categoryId
+     * @return
+     */
     public ServerResponse getCategoryAndChildrenById(Integer categoryId) {
-        Set<Category> categorySet = Sets.newHashSet();
-
+        Set<Category> categorySet = new HashSet<>();
+        findChildrenCategory(categorySet, categoryId);
+        List<Integer> categoryIdList = new ArrayList<>();
+        if (categoryId != null) {
+            for (Category categoryItem : categorySet) {
+                categoryIdList.add(categoryItem.getId());
+            }
+        }
+        return ServerResponse.createBySuccess(categoryIdList);
     }
 
     // 递归算法 算出子节点
-    private Set<Category> findChildrenCategory(Set<Category> categorySet, Integer categoryId) {
+    private void findChildrenCategory(Set<Category> categorySet, Integer categoryId) {
         Category category = categoryMapper.selectByPrimaryKey(categoryId);
         if (category != null) {
             categorySet.add(category);
@@ -84,8 +97,6 @@ public class CategoryServiceImpl implements ICategoryService{
         for (Category categoryItem : categoryList) {
             findChildrenCategory(categorySet, categoryItem.getId());
         }
-        return categorySet;
-
     }
 
 }

@@ -11,4 +11,6 @@ public interface ICategoryService {
     ServerResponse updateCategoryName(Integer categoryId, String categoryName); // 更新品类名
 
     ServerResponse<List<Category>> getChildrenParallelCategory(Integer categoryId); // 获取品类子节点 平级 不递归
+
+    public ServerResponse getCategoryAndChildrenById(Integer categoryId); //递归查询本节点及孩子节点的id
 }
