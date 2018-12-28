@@ -20,7 +20,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@Service("iCategoryService")
+@Service("iCategoryService") //这里实际上不用命名 因为@Autowired是根据类型查找的
 public class CategoryServiceImpl implements ICategoryService{
 
     private Logger logger = LoggerFactory.getLogger(CategoryServiceImpl.class);
