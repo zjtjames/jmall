@@ -13,6 +13,7 @@ import com.jmall.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 
@@ -26,6 +27,8 @@ public class ProductManageController {
     @Autowired
     IProductService iProductService;
 
+    @RequestMapping(value = "/save.do")
+    @ResponseBody //自动通过springmvc的jackson插件自动将返回值序列化为json
     public ServerResponse productSave(HttpSession session, Product product) {
         User user = (User) session.getAttribute(Const.CURRENT_USER);
         if (user == null) {
