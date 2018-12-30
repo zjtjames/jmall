@@ -5,4 +5,6 @@ import com.jmall.pojo.Product;
 
 public interface IProductService {
     ServerResponse saveOrUpdateProduct(Product product); // 新增或更新产品
+
+    public ServerResponse setSaleStatus(Integer productId, Integer status); // 产品上下架
 }

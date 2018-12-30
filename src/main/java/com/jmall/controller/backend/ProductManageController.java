@@ -40,4 +40,18 @@ public class ProductManageController {
             return ServerResponse.createByErrorMessage("无权限操作，需要管理员权限");
         }
     }
+
+    @RequestMapping(value = "/set_sale_status.do")
+    @ResponseBody //自动通过springmvc的jackson插件自动将返回值序列化为json
+    public ServerResponse setSaleStatus(HttpSession session, Integer productId, Integer status) {
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        if (user == null) {
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录，请登录管理员");
+        }
+        if (iUserService.checkAdminRole(user).isSuccess()) {
+            return iProductService.setSaleStatus(productId, status);
+        } else {
+            return ServerResponse.createByErrorMessage("无权限操作，需要管理员权限");
+        }
+    }
 }
