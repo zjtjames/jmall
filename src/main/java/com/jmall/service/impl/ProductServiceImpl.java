@@ -6,7 +6,9 @@ package com.jmall.service.impl;
 import com.jmall.common.Const;
 import com.jmall.common.ResponseCode;
 import com.jmall.common.ServerResponse;
+import com.jmall.dao.CategoryMapper;
 import com.jmall.dao.ProductMapper;
+import com.jmall.pojo.Category;
 import com.jmall.pojo.Product;
 import com.jmall.service.IProductService;
 import com.jmall.util.PropertiesUtil;
@@ -22,6 +24,9 @@ public class ProductServiceImpl implements IProductService {
 
     @Autowired
     private ProductMapper productMapper;
+
+    @Autowired
+    private CategoryMapper categoryMapper;
 
     public ServerResponse saveOrUpdateProduct(Product product) {
         if (product != null) {
@@ -83,9 +88,16 @@ public class ProductServiceImpl implements IProductService {
         productDetailVo.setPrice(product.getPrice());
         productDetailVo.setStock(product.getStock());
         productDetailVo.setStatus(product.getStatus());
-
         //imageHost
+        productDetailVo.setImageHost(PropertiesUtil.getProperty("ftp.server.http.prefix", "http://img.happyjmall.com/"));
         //parentCategoryId
+        Category category = categoryMapper.selectByPrimaryKey(product.getCategoryId());
+        if (category == null) {
+            productDetailVo.setParentCategoryId(0); // 默认根节点
+        } else {
+            productDetailVo.setParentCategoryId(category.getParentId());
+        }
+
         //createTime
         //updateTime
 
