@@ -17,6 +17,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import java.util.List;
 
 @Service("iProductService") //这里实际上不用命名 因为@Autowired是根据类型查找的
@@ -72,8 +73,7 @@ public class ProductServiceImpl implements IProductService {
         }
         // 简单版：返回vo对象--value object
         // 复杂版：pojo->bo(business object)->vo(view object)
-
-
+        return null;
     }
 
     private ProductDetailVo assembleProductDetailVo(Product product) {
@@ -100,6 +100,6 @@ public class ProductServiceImpl implements IProductService {
 
         //createTime
         //updateTime
-
+        return null;
     }
 }
