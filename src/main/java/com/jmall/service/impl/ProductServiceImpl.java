@@ -11,8 +11,10 @@ import com.jmall.dao.ProductMapper;
 import com.jmall.pojo.Category;
 import com.jmall.pojo.Product;
 import com.jmall.service.IProductService;
+import com.jmall.util.DateTimeUtil;
 import com.jmall.util.PropertiesUtil;
 import com.jmall.vo.ProductDetailVo;
+import net.sf.jsqlparser.schema.Server;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -63,7 +65,7 @@ public class ProductServiceImpl implements IProductService {
         return ServerResponse.createByErrorMessage("修改产品销售状态失败");
     }
 
-    public ServerResponse<Object> manageProductDetail(Integer productId) {
+    public ServerResponse<ProductDetailVo> manageProductDetail(Integer productId) {
         if (productId == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDescription());
         }
@@ -73,9 +75,11 @@ public class ProductServiceImpl implements IProductService {
         }
         // 简单版：返回vo对象--value object
         // 复杂版：pojo->bo(business object)->vo(view object)
-        return null;
+        ProductDetailVo productDetailVo = assembleProductDetailVo(product);
+        return ServerResponse.createBySuccess(productDetailVo);
     }
 
+    // 用Product对象装配出ProductDetailVo对象
     private ProductDetailVo assembleProductDetailVo(Product product) {
         ProductDetailVo productDetailVo = new ProductDetailVo();
         productDetailVo.setId(product.getId());
@@ -88,8 +92,10 @@ public class ProductServiceImpl implements IProductService {
         productDetailVo.setPrice(product.getPrice());
         productDetailVo.setStock(product.getStock());
         productDetailVo.setStatus(product.getStatus());
+
         //imageHost
         productDetailVo.setImageHost(PropertiesUtil.getProperty("ftp.server.http.prefix", "http://img.happyjmall.com/"));
+
         //parentCategoryId
         Category category = categoryMapper.selectByPrimaryKey(product.getCategoryId());
         if (category == null) {
@@ -99,7 +105,10 @@ public class ProductServiceImpl implements IProductService {
         }
 
         //createTime
+        productDetailVo.setCreateTime(DateTimeUtil.dateToStr(product.getCreateTime()));
         //updateTime
-        return null;
+        productDetailVo.setUpdateTime(DateTimeUtil.dateToStr(product.getUpdateTime()));
+
+        return productDetailVo;
     }
 }

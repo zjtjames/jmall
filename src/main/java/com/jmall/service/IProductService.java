@@ -2,9 +2,12 @@ package com.jmall.service;
 
 import com.jmall.common.ServerResponse;
 import com.jmall.pojo.Product;
+import com.jmall.vo.ProductDetailVo;
 
 public interface IProductService {
     ServerResponse saveOrUpdateProduct(Product product); // 新增或更新产品
 
-    public ServerResponse setSaleStatus(Integer productId, Integer status); // 产品上下架
+    ServerResponse setSaleStatus(Integer productId, Integer status); // 产品上下架
+
+    ServerResponse<ProductDetailVo> manageProductDetail(Integer productId); // 产品详情
 }
