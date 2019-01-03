@@ -5,6 +5,7 @@ package com.jmall.service.impl;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.jmall.common.Const;
+import com.jmall.common.ResponseCode;
 import com.jmall.common.ServerResponse;
 import com.jmall.common.TokenCache;
 import com.jmall.dao.UserMapper;
@@ -85,7 +86,7 @@ public class UserServiceImpl implements IUserService{
             }
         }
         else {
-            return ServerResponse.createByErrorMessage("参数错误");
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), "参数错误");
         }
         return ServerResponse.createBySuccessMessage("校验成功");
     }

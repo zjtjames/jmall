@@ -111,4 +111,8 @@ public class ProductServiceImpl implements IProductService {
 
         return productDetailVo;
     }
+
+    public ServerResponse<Object> getProductList(Integer pageNum, Integer pageSize) {
+        return  null;
+    }
 }

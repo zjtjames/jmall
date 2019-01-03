@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpSession;
 
 @Controller
-@RequestMapping("/user/")
+@RequestMapping("/user/") // 最后一个/可有可无
 public class UserController {
 
     @Autowired  //依赖注入
