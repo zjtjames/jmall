@@ -176,4 +176,12 @@
       update_time = now()
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <!-- 本来要返回一个list 但是mybatis的resultmap已经封装好了 -->
+  <select id="selectList" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM jmall_product
+    ORDER BY id ASC
+  </select>
 </mapper>

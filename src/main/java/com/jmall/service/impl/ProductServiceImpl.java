@@ -3,7 +3,8 @@
  */
 package com.jmall.service.impl;
 
-import com.jmall.common.Const;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.jmall.common.ResponseCode;
 import com.jmall.common.ServerResponse;
 import com.jmall.dao.CategoryMapper;
@@ -14,12 +15,14 @@ import com.jmall.service.IProductService;
 import com.jmall.util.DateTimeUtil;
 import com.jmall.util.PropertiesUtil;
 import com.jmall.vo.ProductDetailVo;
+import com.jmall.vo.ProductListVo;
 import net.sf.jsqlparser.schema.Server;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service("iProductService") //这里实际上不用命名 因为@Autowired是根据类型查找的
@@ -112,7 +115,34 @@ public class ProductServiceImpl implements IProductService {
         return productDetailVo;
     }
 
-    public ServerResponse<Object> getProductList(Integer pageNum, Integer pageSize) {
-        return  null;
+    public ServerResponse<PageInfo> getProductList(Integer pageNum, Integer pageSize) {
+        // startPage--start 开始分页
+        PageHelper.startPage(pageNum, pageSize);
+        //填充自己的sql查询逻辑
+        List<Product> productList = productMapper.selectList();
+        List<ProductListVo> productListVoList = new ArrayList<>();
+        for (Product productItem : productList) {
+            productListVoList.add(assembleProductListVo(productItem));
+        }
+        //pageHelper-收尾
+        // 先用productList进行分页
+        PageInfo pageResult = new PageInfo(productList);
+        // 再重置分页结果中的List为productListVoList
+        pageResult.setList(productListVoList);
+        return ServerResponse.createBySuccess(pageResult);
+    }
+
+    // 用Product对象装配出ProductListVo对象
+    private ProductListVo assembleProductListVo(Product product) {
+        ProductListVo productListVo = new ProductListVo();
+        productListVo.setId(product.getId());
+        productListVo.setCategoryId(product.getCategoryId());
+        productListVo.setName(product.getName());
+        productListVo.setSubtitle(product.getSubtitle());
+        productListVo.setMainImage(product.getMainImage());
+        productListVo.setPrice(product.getPrice());
+        productListVo.setStatus(product.getStatus());
+        productListVo.setImageHost(PropertiesUtil.getProperty("ftp.server.http.prefix", "http://img.happyjmall.com/"));
+        return productListVo;
     }
 }
