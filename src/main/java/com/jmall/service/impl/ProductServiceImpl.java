@@ -116,6 +116,7 @@ public class ProductServiceImpl implements IProductService {
     }
 
     public ServerResponse<PageInfo> getProductList(Integer pageNum, Integer pageSize) {
+        // pagehelper通过aop的方式，在执行sql的时候，在sql的后面写上分页处理，mybatis pager就会监听到这个切面，就通过aop把分页需要的sql再执行一遍
         // startPage--start 开始分页
         PageHelper.startPage(pageNum, pageSize);
         //填充自己的sql查询逻辑
