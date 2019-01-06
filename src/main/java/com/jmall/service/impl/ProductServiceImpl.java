@@ -16,7 +16,6 @@ import com.jmall.util.DateTimeUtil;
 import com.jmall.util.PropertiesUtil;
 import com.jmall.vo.ProductDetailVo;
 import com.jmall.vo.ProductListVo;
-import net.sf.jsqlparser.schema.Server;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -146,4 +145,24 @@ public class ProductServiceImpl implements IProductService {
         productListVo.setImageHost(PropertiesUtil.getProperty("ftp.server.http.prefix", "http://img.happyjmall.com/"));
         return productListVo;
     }
+
+    public ServerResponse<PageInfo> searchProduct(String productName, Integer productId, Integer pageNum, Integer pageSize) {
+        // startPage--start 开始分页
+        PageHelper.startPage(pageNum, pageSize);
+        if (StringUtils.isNotBlank(productName)) {
+            productName = "%" + productName + "%";
+        }
+        List<Product> productList = productMapper.selectByNameAndProductId(productName, productId);
+        List<ProductListVo> productListVoList = new ArrayList<>();
+        for (Product productItem : productList) {
+            productListVoList.add(assembleProductListVo(productItem));
+        }
+        //pageHelper-收尾
+        // 先用productList进行分页
+        PageInfo pageResult = new PageInfo(productList);
+        // 再重置分页结果中的List为productListVoList
+        pageResult.setList(productListVoList);
+        return ServerResponse.createBySuccess(pageResult);
+    }
+
 }

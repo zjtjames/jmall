@@ -184,4 +184,18 @@
     FROM jmall_product
     ORDER BY id ASC
   </select>
+  
+  <select id="selectByNameAndProductId" resultMap="BaseResultMap" parameterType="map">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM jmall_product
+    <where>
+      <if test="productId != null">
+        and name = #{productName}
+      </if>
+      <if test="productName != null">
+        and id = #{productId}
+      </if>
+    </where>
+  </select>
 </mapper>
