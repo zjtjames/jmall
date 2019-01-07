@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.UUID;
 
 public class FileServiceImpl implements iFileService {
@@ -34,7 +35,14 @@ public class FileServiceImpl implements iFileService {
         }
         // public File(String parent, String child){} @param   parent  The parent pathname string
         File targetFile = new File(path, uploadFileName);
-
+        try {
+            file.transferTo(targetFile);
+            //文件已经成功上传至upload文件夹
+            // TODO 将targetFile 上传至FTP服务器上
+            // TODO 上传完之后，删除upload下面的文件
+        } catch (IOException e) {
+            logger.error("上传文件异常", e);
+        }
 
     }
 
