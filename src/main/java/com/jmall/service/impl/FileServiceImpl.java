@@ -34,16 +34,19 @@ public class FileServiceImpl implements iFileService {
             fileDir.mkdirs();
         }
         // public File(String parent, String child){} @param   parent  The parent pathname string
+        // 创建一个File类型的对象 File类是java.io包中唯一代表磁盘文件本身的对象
         File targetFile = new File(path, uploadFileName);
         try {
+            // 将上传的文件存储到目标文件中
             file.transferTo(targetFile);
             //文件已经成功上传至upload文件夹
             // TODO 将targetFile 上传至FTP服务器上
             // TODO 上传完之后，删除upload下面的文件
         } catch (IOException e) {
             logger.error("上传文件异常", e);
+            return null;
         }
-
+        return targetFile.getName();
     }
 
 
