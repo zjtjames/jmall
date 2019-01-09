@@ -131,4 +131,19 @@ public class ProductManageController {
             return ServerResponse.createByErrorMessage("无权限操作，需要管理员权限");
         }
     }
+
+    @RequestMapping("richtext_img_upload.do")
+    @ResponseBody
+    public ServerResponse richtextImgUpload(HttpSession session, @RequestParam(value = "upload_file", required = false) MultipartFile file, HttpServletRequest request) {
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        if (user == null) {
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录，请登录管理员");
+        }
+        if (iUserService.checkAdminRole(user).isSuccess()) {
+            // 富文本中对于返回值有自己的要求，我们使用的是simditor，所以按照simditor的要求进行返回
+
+        } else {
+            return ServerResponse.createByErrorMessage("无权限操作，需要管理员权限");
+        }
+    }
 }

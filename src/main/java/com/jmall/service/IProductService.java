@@ -15,4 +15,5 @@ public interface IProductService {
     public ServerResponse<PageInfo> getProductList(Integer pageNum, Integer pageSize); //产品list 分页
 
     public ServerResponse<PageInfo> searchProduct(String productName, Integer productId, Integer pageNum, Integer pageSize); //产品搜索
+
 }
