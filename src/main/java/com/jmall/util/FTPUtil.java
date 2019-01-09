@@ -78,8 +78,10 @@ public class FTPUtil {
     public static boolean uploadFile(List<File> fileList) throws IOException {
         FTPUtil ftpUtil = new FTPUtil(ftpIP, 21, ftpUser, ftpPassword);
         logger.info("开始连接ftp服务器");
+        //传到ftp服务器文件夹下的img文件夹里
         boolean result = ftpUtil.uploadFile("img", fileList);
         logger.info("结束上传，上传结果{}", result);
+        return result;
     }
 
     /**
@@ -105,6 +107,7 @@ public class FTPUtil {
                 ftpClient.enterLocalPassiveMode();
                 for (File fileItem : fileList) {
                     fileInputStream = new FileInputStream(fileItem);
+                    // 将本地文件上传到ftp服务器
                     ftpClient.storeFile(fileItem.getName(), fileInputStream);
                 }
             } catch (IOException e) {
