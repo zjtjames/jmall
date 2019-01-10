@@ -13,6 +13,7 @@ import com.jmall.service.IProductService;
 import com.jmall.service.IUserService;
 import com.jmall.util.PropertiesUtil;
 import net.sf.jsqlparser.schema.Server;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -134,16 +135,33 @@ public class ProductManageController {
 
     @RequestMapping("richtext_img_upload.do")
     @ResponseBody
-    public ServerResponse richtextImgUpload(HttpSession session, @RequestParam(value = "upload_file", required = false) MultipartFile file, HttpServletRequest request) {
+    public Map richtextImgUpload(HttpSession session, @RequestParam(value = "upload_file", required = false) MultipartFile file, HttpServletRequest request) {
+        Map resultMap = new HashMap();
         User user = (User) session.getAttribute(Const.CURRENT_USER);
         if (user == null) {
-            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录，请登录管理员");
+            resultMap.put("success", false);
+            resultMap.put("msg", "用户未登录，请登录管理员");
+            return resultMap;
         }
         if (iUserService.checkAdminRole(user).isSuccess()) {
             // 富文本中对于返回值有自己的要求，我们使用的是simditor，所以按照simditor的要求进行返回
+//            {
+//                "success": true/false,
+//                "msg":"error message", # optional
+//                "file_path":"[real file path]"
+//            }
+            String path = request.getSession().getServletContext().getRealPath("upload");
+            String targetFileName = iFileService.upload(file, path);
+            if (StringUtils.isBlank(targetFileName)) {
+                resultMap.put("success", false);
+                resultMap.put("msg", "上传失败");
+                return resultMap;
+            }
 
         } else {
-            return ServerResponse.createByErrorMessage("无权限操作，需要管理员权限");
+            resultMap.put("success", false);
+            resultMap.put("msg", "无权限操作，需要管理员权限");
+            return resultMap;
         }
     }
 }
