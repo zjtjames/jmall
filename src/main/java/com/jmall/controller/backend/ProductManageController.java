@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
@@ -135,7 +136,7 @@ public class ProductManageController {
 
     @RequestMapping("richtext_img_upload.do")
     @ResponseBody
-    public Map richtextImgUpload(HttpSession session, @RequestParam(value = "upload_file", required = false) MultipartFile file, HttpServletRequest request) {
+    public Map richtextImgUpload(HttpSession session, @RequestParam(value = "upload_file", required = false) MultipartFile file, HttpServletRequest request, HttpServletResponse response) {
         Map resultMap = new HashMap();
         User user = (User) session.getAttribute(Const.CURRENT_USER);
         if (user == null) {
@@ -144,12 +145,14 @@ public class ProductManageController {
             return resultMap;
         }
         if (iUserService.checkAdminRole(user).isSuccess()) {
-            // 富文本中对于返回值有自己的要求，我们使用的是simditor，所以按照simditor的要求进行返回
+            // 富文本中对于返回值有自己的要求，我们使用的是simditor富文本插件，所以按照simditor的要求进行返回
+            //JSON response after uploading complete
 //            {
 //                "success": true/false,
 //                "msg":"error message", # optional
 //                "file_path":"[real file path]"
 //            }
+            //path是本地的地址
             String path = request.getSession().getServletContext().getRealPath("upload");
             String targetFileName = iFileService.upload(file, path);
             if (StringUtils.isBlank(targetFileName)) {
@@ -157,7 +160,13 @@ public class ProductManageController {
                 resultMap.put("msg", "上传失败");
                 return resultMap;
             }
-
+            String url = PropertiesUtil.getProperty("ftp.server.http.prefix") + targetFileName;
+            resultMap.put("success", true);
+            resultMap.put("msg", "上传成功");
+            resultMap.put("file_path", url);
+            //simditor富文本插件要求修改response的Header
+            response.addHeader("Access-Control-Allow-Headers", "X-File-Name");
+            return resultMap;
         } else {
             resultMap.put("success", false);
             resultMap.put("msg", "无权限操作，需要管理员权限");
