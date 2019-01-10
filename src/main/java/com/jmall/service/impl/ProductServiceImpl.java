@@ -5,6 +5,7 @@ package com.jmall.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.jmall.common.Const;
 import com.jmall.common.ResponseCode;
 import com.jmall.common.ServerResponse;
 import com.jmall.dao.CategoryMapper;
@@ -163,6 +164,24 @@ public class ProductServiceImpl implements IProductService {
         // 再重置分页结果中的List为productListVoList
         pageResult.setList(productListVoList);
         return ServerResponse.createBySuccess(pageResult);
+    }
+
+    public ServerResponse<ProductDetailVo> getProductDetail(Integer productId) {
+        if (productId == null) {
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDescription());
+        }
+        Product product = productMapper.selectByPrimaryKey(productId);
+        if (product == null) {
+            ServerResponse.createByErrorMessage("产品不存在");
+        }
+        // 用户版的获取商品详情 需要判断商品是否处于在售状态
+        if (product.getStatus() != Const.ProductStatusEnum.ON_SALE.getCode()) {
+            return ServerResponse.createByErrorMessage("产品已下架或删除");
+        }
+        // 简单版：返回vo对象--value object
+        // 复杂版：pojo->bo(business object)->vo(view object)
+        ProductDetailVo productDetailVo = assembleProductDetailVo(product);
+        return ServerResponse.createBySuccess(productDetailVo);
     }
 
 }

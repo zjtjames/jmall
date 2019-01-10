@@ -15,5 +15,27 @@ public class Const {
         int ROLE_ADMIN = 1; //管理员
     }
 
+    public enum ProductStatusEnum {
+
+        ON_SALE(1, "在线");
+
+
+        private final int code;
+        private final String description;
+
+        ProductStatusEnum(int code, String description) {
+            this.code = code;
+            this.description = description;
+        }
+
+        public int getCode() {
+            return code;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+    }
+
 
 }

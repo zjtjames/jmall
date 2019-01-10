@@ -16,4 +16,6 @@ public interface IProductService {
 
     public ServerResponse<PageInfo> searchProduct(String productName, Integer productId, Integer pageNum, Integer pageSize); //产品搜索
 
+    ServerResponse<ProductDetailVo> getProductDetail(Integer productId); //用户版的产品详情
+
 }
