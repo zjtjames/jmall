@@ -207,6 +207,10 @@ public class ProductServiceImpl implements IProductService {
             }
             categoryIdList = iCategoryService.getCategoryAndChildrenById(category.getId()).getData();
         }
+
+        if (StringUtils.isNotBlank(keyword)) {
+
+        }
     }
 
 
