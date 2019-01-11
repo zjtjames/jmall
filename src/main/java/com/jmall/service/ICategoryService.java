@@ -12,5 +12,5 @@ public interface ICategoryService {
 
     ServerResponse<List<Category>> getChildrenParallelCategory(Integer categoryId); // 获取品类子节点 平级 不递归
 
-    public ServerResponse getCategoryAndChildrenById(Integer categoryId); //递归查询本节点及孩子节点的id
+    ServerResponse<List<Integer>> getCategoryAndChildrenById(Integer categoryId); //递归查询本节点及孩子节点的id
 }

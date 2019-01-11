@@ -12,11 +12,13 @@ import com.jmall.dao.CategoryMapper;
 import com.jmall.dao.ProductMapper;
 import com.jmall.pojo.Category;
 import com.jmall.pojo.Product;
+import com.jmall.service.ICategoryService;
 import com.jmall.service.IProductService;
 import com.jmall.util.DateTimeUtil;
 import com.jmall.util.PropertiesUtil;
 import com.jmall.vo.ProductDetailVo;
 import com.jmall.vo.ProductListVo;
+import net.sf.jsqlparser.schema.Server;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,6 +35,10 @@ public class ProductServiceImpl implements IProductService {
 
     @Autowired
     private CategoryMapper categoryMapper;
+
+    //平级调用 service调service
+    @Autowired
+    private ICategoryService iCategoryService;
 
     public ServerResponse saveOrUpdateProduct(Product product) {
         if (product != null) {
@@ -183,5 +189,26 @@ public class ProductServiceImpl implements IProductService {
         ProductDetailVo productDetailVo = assembleProductDetailVo(product);
         return ServerResponse.createBySuccess(productDetailVo);
     }
+
+    public ServerResponse<PageInfo> getProductByKeywordCategory(String keyword, Integer categoryId, int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        if (StringUtils.isBlank(keyword) && categoryId == null) {
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDescription());
+        }
+        // 用来存储一个分类的所有子分类id
+        List<Integer> categoryIdList = new ArrayList<>();
+        if (categoryId != null) {
+            Category category = categoryMapper.selectByPrimaryKey(categoryId);
+            if (category == null && StringUtils.isBlank(keyword)) {
+                //没有该分类，且没有输入关键字，这时返回一个空的结果集，不报错
+                List<ProductListVo> productListVoList = new ArrayList<>();
+                PageInfo pageInfo = new PageInfo(productListVoList);
+                return ServerResponse.createBySuccess(pageInfo);
+            }
+            categoryIdList = iCategoryService.getCategoryAndChildrenById(category.getId()).getData();
+        }
+    }
+
+
 
 }

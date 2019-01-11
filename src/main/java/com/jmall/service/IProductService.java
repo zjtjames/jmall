@@ -12,9 +12,9 @@ public interface IProductService {
 
     ServerResponse<ProductDetailVo> manageProductDetail(Integer productId); // 产品详情
 
-    public ServerResponse<PageInfo> getProductList(Integer pageNum, Integer pageSize); //产品list 分页
+    ServerResponse<PageInfo> getProductList(Integer pageNum, Integer pageSize); //产品list 分页
 
-    public ServerResponse<PageInfo> searchProduct(String productName, Integer productId, Integer pageNum, Integer pageSize); //产品搜索
+    ServerResponse<PageInfo> searchProduct(String productName, Integer productId, Integer pageNum, Integer pageSize); //产品搜索
 
     ServerResponse<ProductDetailVo> getProductDetail(Integer productId); //用户版的产品详情
 

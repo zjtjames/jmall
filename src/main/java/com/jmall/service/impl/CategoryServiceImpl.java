@@ -73,7 +73,7 @@ public class CategoryServiceImpl implements ICategoryService{
      * @param categoryId
      * @return
      */
-    public ServerResponse getCategoryAndChildrenById(Integer categoryId) {
+    public ServerResponse<List<Integer>> getCategoryAndChildrenById(Integer categoryId) {
         Set<Category> categorySet = new HashSet<>();
         findChildrenCategory(categorySet, categoryId);
         List<Integer> categoryIdList = new ArrayList<>();
@@ -85,7 +85,7 @@ public class CategoryServiceImpl implements ICategoryService{
         return ServerResponse.createBySuccess(categoryIdList);
     }
 
-    // 递归算法 算出子节点 广度优先
+    // 递归算法 算出子节点 深度优先
     private void findChildrenCategory(Set<Category> categorySet, Integer categoryId) { //利用副作用改变categorySet
         Category category = categoryMapper.selectByPrimaryKey(categoryId);
         if (category != null) {
