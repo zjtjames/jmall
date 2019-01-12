@@ -190,7 +190,7 @@ public class ProductServiceImpl implements IProductService {
         return ServerResponse.createBySuccess(productDetailVo);
     }
 
-    public ServerResponse<PageInfo> getProductByKeywordCategory(String keyword, Integer categoryId, int pageNum, int pageSize) {
+    public ServerResponse<PageInfo> getProductByKeywordCategory(String keyword, Integer categoryId, int pageNum, int pageSize, String orderBy) {
         PageHelper.startPage(pageNum, pageSize);
         if (StringUtils.isBlank(keyword) && categoryId == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDescription());
@@ -209,10 +209,19 @@ public class ProductServiceImpl implements IProductService {
         }
 
         if (StringUtils.isNotBlank(keyword)) {
-
+            keyword = new StringBuilder().append("%").append(keyword).append("%").toString();
         }
-    }
+        //排序处理
+        if (StringUtils.isNotBlank(orderBy)) {
+            if (Const.ProductListOrderBy.PRICE_ASC_DESC.contains(orderBy)) {
+                PageHelper.orderBy(orderBy.replace("_", " "));
+            }
+        }
+        //搜索
 
+
+
+    }
 
 
 }

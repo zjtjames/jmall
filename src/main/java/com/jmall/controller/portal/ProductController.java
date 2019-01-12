@@ -35,7 +35,9 @@ public class ProductController {
     public ServerResponse<PageInfo> list(@RequestParam(value = "keyword", required = false) String keyword,
                                          @RequestParam(value = "categoryId", required = false) Integer categoryId,
                                          @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
-                                         @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
+                                         @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+                                         @RequestParam(value = "orderBy", defaultValue = "") String orderBy) {
+        return null;
 
     }
 }

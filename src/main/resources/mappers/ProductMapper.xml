@@ -190,12 +190,30 @@
     <include refid="Base_Column_List"/>
     FROM jmall_product
     <where>
-      <if test="productId != null">
-        and name = #{productName}
-      </if>
       <if test="productName != null">
+        <!-- 用like和通配符%实现模糊查询 -->
+        and name LIKE #{productName}
+      </if>
+      <if test="productId != null">
         and id = #{productId}
       </if>
     </where>
+  </select>
+  
+  <select id="selectByNameAndCategoryIds" resultMap="BaseResultMap" parameterType="map" >
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM jmall_product
+    WHERE status = 1
+    <if test="productName != null">
+      and name LIKE #{productName}
+    </if>
+    <if test="categoryIdList != null">
+      and category_id in
+      <foreach collection="categoryIdList">
+
+      </foreach>
+    </if>
+
   </select>
 </mapper>
