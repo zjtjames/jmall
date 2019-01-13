@@ -5,6 +5,7 @@ package com.jmall.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.google.common.collect.Lists;
 import com.jmall.common.Const;
 import com.jmall.common.ResponseCode;
 import com.jmall.common.ServerResponse;
@@ -214,13 +215,24 @@ public class ProductServiceImpl implements IProductService {
         //排序处理
         if (StringUtils.isNotBlank(orderBy)) {
             if (Const.ProductListOrderBy.PRICE_ASC_DESC.contains(orderBy)) {
+                // PageHelper要求orderBy的输入是 price desc形式的
                 PageHelper.orderBy(orderBy.replace("_", " "));
             }
         }
-        //搜索
+        //搜索 mybatis对返回集合的设定的是 如果没有查到不会返回null
+        List<Product> productList = productMapper.selectByNameAndCategoryIds(StringUtils.isBlank(keyword)? null:keyword,
+                categoryIdList.size()==0? null: categoryIdList);
 
-
-
+        List<ProductListVo> productListVoList = Lists.newArrayList();
+        for (Product productItem : productList) {
+            productListVoList.add(assembleProductListVo(productItem));
+        }
+        
+        // 先用productList进行分页
+        PageInfo pageInfo = new PageInfo(productList);
+        // 再重置分页结果中的List为productListVoList
+        pageInfo.setList(productListVoList);
+        return ServerResponse.createBySuccess(pageInfo);
     }
 
 

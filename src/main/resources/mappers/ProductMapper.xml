@@ -206,14 +206,14 @@
     FROM jmall_product
     WHERE status = 1
     <if test="productName != null">
+      <!-- 用like和通配符%实现模糊查询 -->
       and name LIKE #{productName}
     </if>
     <if test="categoryIdList != null">
       and category_id in
-      <foreach collection="categoryIdList">
-
+      <foreach collection="categoryIdList" item="id" index="index" open="(" close=")" separator=",">
+        #{id}
       </foreach>
     </if>
-
   </select>
 </mapper>
