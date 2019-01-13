@@ -18,7 +18,7 @@ public interface IProductService {
 
     ServerResponse<ProductDetailVo> getProductDetail(Integer productId); //用户版的产品详情
 
-    // 用户版的产品搜索 categoryId
+    // 用户版的产品搜索及动态排序 categoryId
     ServerResponse<PageInfo> getProductByKeywordCategory(String keyword, Integer categoryId, int pageNum, int pageSize, String orderBy);
 
 }
