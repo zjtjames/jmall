@@ -46,6 +46,7 @@ public class FileServiceImpl implements IFileService {
             file.transferTo(targetFile);
             //文件已经成功上传至本地upload文件夹
             // 将targetFile 上传至FTP服务器上
+            logger.info("将targetFile 上传至FTP服务器上");
             FTPUtil.uploadFile(Lists.newArrayList(targetFile)); //guawa
             // 文件已经上传至ftp服务器上
             // 上传完之后，删除upload下面的文件
