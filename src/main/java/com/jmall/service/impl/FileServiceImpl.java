@@ -30,7 +30,7 @@ public class FileServiceImpl implements IFileService {
         // A用户:abc.jpg
         // B用户:abc.jpg 不用用户相同文件名的文件会覆盖
         String uploadFileName = UUID.randomUUID().toString() + "." + fileExtensionName;
-        logger.info("开始上传文件，上传文件的文件名:{}，上传的路径：{}，新文件名：{}", fileName, path, uploadFileName);
+        logger.info("开始上传文件，上传文件的文件名:{}，服务器本地路径：{}，新文件名：{}", fileName, path, uploadFileName);
         // 目录
         File fileDir = new File(path);
         if (!fileDir.exists()) {
@@ -47,7 +47,8 @@ public class FileServiceImpl implements IFileService {
             //文件已经成功上传至本地upload文件夹
             // 将targetFile 上传至FTP服务器上
             logger.info("将targetFile 上传至FTP服务器上");
-            FTPUtil.uploadFile(Lists.newArrayList(targetFile)); //guawa
+            boolean result = FTPUtil.uploadFile(Lists.newArrayList(targetFile)); //guawa
+            logger.info("上传至FTP服务器结果：{}", result);
             // 文件已经上传至ftp服务器上
             // 上传完之后，删除upload下面的文件
             targetFile.delete();

@@ -18,8 +18,8 @@ public class FTPUtil {
     private static Logger logger = LoggerFactory.getLogger(FTPUtil.class);
 
     private static String ftpIP = PropertiesUtil.getProperty("ftp.server.ip");
-    private static String ftpUser = PropertiesUtil.getProperty("ftp.server.user");
-    private static String ftpPassword = PropertiesUtil.getProperty("ftp.server.password");
+    private static String ftpUser = PropertiesUtil.getProperty("ftp.user");
+    private static String ftpPassword = PropertiesUtil.getProperty("ftp.password");
 
     public FTPUtil(String ip, int port, String user, String pwd) {
         this.ip = ip;
@@ -94,7 +94,9 @@ public class FTPUtil {
         boolean uploaded = true;
         FileInputStream fileInputStream = null;
         //连接FTP服务器
-        if (connectServer(this.ip, this.port, this.user, this.pwd)) {
+        boolean connected = connectServer(this.ip, this.user, this.pwd);
+        logger.info("连接ftp服务器结果：{}", connected);
+        if (connected) {
             try {
                 //修改工作目录
                 ftpClient.changeWorkingDirectory(remotePath);
@@ -123,7 +125,7 @@ public class FTPUtil {
     }
 
     //封装连接服务器
-    private boolean connectServer(String ip, int port, String user, String Password) {
+    private boolean connectServer(String ip, String user, String Password) {
         boolean isSuccess = false;
         ftpClient = new FTPClient();
         try {
