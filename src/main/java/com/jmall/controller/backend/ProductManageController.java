@@ -122,6 +122,7 @@ public class ProductManageController {
         if (iUserService.checkAdminRole(user).isSuccess()) {
             // 填充业务
             String path = request.getSession().getServletContext().getRealPath("upload");
+            //先在服务器本地存储的目录
             String targetFileName = iFileService.upload(file, path);
             // targetFileName是UUID生成的随机码+后缀
             String url = PropertiesUtil.getProperty("ftp.server.http.prefix") + targetFileName;

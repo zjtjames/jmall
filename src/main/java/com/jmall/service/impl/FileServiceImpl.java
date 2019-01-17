@@ -21,7 +21,7 @@ public class FileServiceImpl implements IFileService {
 
     private Logger logger = LoggerFactory.getLogger(FileServiceImpl.class);
 
-    // 这个path是本地存储位置 先上传到本地 本地再传到ftp服务器的文件夹下
+    // 这个path是服务器本地存储位置 先上传到服务器本地 本地再传到ftp服务器的文件夹下
     public String upload(MultipartFile file, String path) {
         String fileName = file.getOriginalFilename();
         // 扩展名
