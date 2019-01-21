@@ -70,7 +70,7 @@ public class UserController {
             user.setPassword(StringUtils.EMPTY);
             return ServerResponse.createBySuccess(user);
         }
-        return ServerResponse.createByErrorMessage("用户未登录，无法获取当前用户的信息");
+        return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDescription());
     }
 
     @RequestMapping(value = "forget_get_question.do",method = RequestMethod.POST) // 获取修改密码问题

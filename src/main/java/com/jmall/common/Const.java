@@ -46,5 +46,10 @@ public class Const {
         }
     }
 
+    public interface Cart{
+        int CHECKED = 1; //即购物车中选中状态
+        int UN_CHECKED = 0; //购物车中未选中状态
+    }
+
 
 }
