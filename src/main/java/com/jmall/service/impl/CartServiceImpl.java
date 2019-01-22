@@ -7,10 +7,13 @@ import com.google.common.collect.Lists;
 import com.jmall.common.Const;
 import com.jmall.common.ServerResponse;
 import com.jmall.dao.CartMapper;
+import com.jmall.dao.ProductMapper;
 import com.jmall.pojo.Cart;
+import com.jmall.pojo.Product;
 import com.jmall.service.ICartService;
 import com.jmall.vo.CartProductVo;
 import com.jmall.vo.CartVo;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +25,9 @@ public class CartServiceImpl implements ICartService {
 
     @Autowired
     private CartMapper cartMapper;
+
+    @Autowired
+    private ProductMapper productMapper;
 
     public ServerResponse add(Integer userId, Integer productId, Integer count) {
         Cart cart = cartMapper.selectCartByUserIdProductId(userId, productId);
@@ -48,7 +54,24 @@ public class CartServiceImpl implements ICartService {
         CartVo cartVo = new CartVo();
         List<Cart> cartList = cartMapper.selectCartByUserId(userId);
         List<CartProductVo> cartProductVoList = Lists.newArrayList();
+
         BigDecimal cartTotalPrice = new BigDecimal("0");
-        return null;
+
+        if (CollectionUtils.isNotEmpty(cartList)) {
+            for (Cart cartItem : cartList) {
+                CartProductVo cartProductVo = new CartProductVo();
+                cartProductVo.setId(cartItem.getId());
+                cartProductVo.setUserId(cartItem.getUserId());
+                cartProductVo.setProductId(cartItem.getProductId());
+                cartProductVo.setQuantity(cartItem.getQuantity());
+                cartProductVo.setProductChecked(cartItem.getChecked());
+
+                Product product = productMapper.selectByPrimaryKey(cartItem.getProductId());
+                if (product != null) {
+                    cartProductVo.setProductMainImage(product.getMainImage());
+
+                }
+            }
+        }
     }
 }
