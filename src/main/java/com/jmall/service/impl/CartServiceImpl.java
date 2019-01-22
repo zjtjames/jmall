@@ -3,13 +3,19 @@
  */
 package com.jmall.service.impl;
 
+import com.google.common.collect.Lists;
 import com.jmall.common.Const;
 import com.jmall.common.ServerResponse;
 import com.jmall.dao.CartMapper;
 import com.jmall.pojo.Cart;
 import com.jmall.service.ICartService;
+import com.jmall.vo.CartProductVo;
+import com.jmall.vo.CartVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
+import java.util.List;
 
 @Service("iCartService")
 public class CartServiceImpl implements ICartService {
@@ -34,5 +40,15 @@ public class CartServiceImpl implements ICartService {
             cart.setQuantity(count);
             cartMapper.updateByPrimaryKeySelective(cart);
         }
+        return null;
+    }
+
+    //封装一个private方法 用List<Cart>对象拼接出CartVo
+    private CartVo getCartVoLimit(Integer userId) {
+        CartVo cartVo = new CartVo();
+        List<Cart> cartList = cartMapper.selectCartByUserId(userId);
+        List<CartProductVo> cartProductVoList = Lists.newArrayList();
+        BigDecimal cartTotalPrice = new BigDecimal("0");
+        return null;
     }
 }

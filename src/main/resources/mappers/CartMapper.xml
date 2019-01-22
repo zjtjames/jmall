@@ -120,4 +120,11 @@
     WHERE user_id = #{userId}
     and product_id = #{productId}
   </select>
+
+  <select id="selectCartByUserId" resultMap="BaseResultMap" parameterType="int">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM jmall_cart
+    WHERE user_id = #{userId}
+  </select>
 </mapper>
