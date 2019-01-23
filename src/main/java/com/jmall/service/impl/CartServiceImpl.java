@@ -56,7 +56,11 @@ public class CartServiceImpl implements ICartService {
         return ServerResponse.createBySuccess(cartVo);
     }
 
-    //封装一个private方法 用List<Cart>对象拼接出CartVo
+    public ServerResponse<CartVo> update(Integer userId, Integer productId, Integer count) {
+
+    }
+
+    //核心方法 封装一个private方法 用List<Cart>对象拼接出CartVo
     private CartVo getCartVoLimit(Integer userId) {
         CartVo cartVo = new CartVo();
         List<Cart> cartList = cartMapper.selectCartByUserId(userId);
