@@ -11,7 +11,7 @@ public class CartVo {
 
     private List<CartProductVo> cartProductVoList;
     private BigDecimal cartTotalPrice; //购物车全总价
-    private Boolean allChecked; //是否已经都勾选
+    private boolean allChecked; //是否已经都勾选
     private String imageHost;
 
     public List<CartProductVo> getCartProductVoList() {
@@ -30,7 +30,7 @@ public class CartVo {
         this.cartTotalPrice = cartTotalPrice;
     }
 
-    public Boolean getAllChecked() {
+    public boolean getAllChecked() {
         return allChecked;
     }
 

@@ -24,11 +24,11 @@ public class CartController {
 
     @RequestMapping("add.do")
     @ResponseBody
-    public ServerResponse add(HttpSession session, Integer count, Integer productId) {
+    public ServerResponse add(HttpSession session, Integer productId, Integer count) {
         User user = (User) session.getAttribute(Const.CURRENT_USER);
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDescription());
         }
-        return null;
+        return iCartService.add(user.getId(), productId, count);
     }
 }

@@ -112,7 +112,7 @@ public class ProductManageController {
         }
     }
 
-    @RequestMapping("upload.do")
+    @RequestMapping("upload.do") //图片上传
     @ResponseBody
     public ServerResponse upload(HttpSession session, @RequestParam(value = "upload_file", required = false) MultipartFile file, HttpServletRequest request) {
         User user = (User) session.getAttribute(Const.CURRENT_USER);
@@ -136,7 +136,7 @@ public class ProductManageController {
         }
     }
 
-    @RequestMapping("richtext_img_upload.do")
+    @RequestMapping("richtext_img_upload.do") // 富文本上传
     @ResponseBody
     public Map richtextImgUpload(HttpSession session, @RequestParam(value = "upload_file", required = false) MultipartFile file, HttpServletRequest request, HttpServletResponse response) {
         Map resultMap = new HashMap();

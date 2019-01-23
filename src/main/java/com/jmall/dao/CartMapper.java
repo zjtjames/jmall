@@ -21,4 +21,7 @@ public interface CartMapper {
     Cart selectCartByUserIdProductId(@Param("userId") Integer userId, @Param("productId") Integer productId);
 
     List<Cart> selectCartByUserId(Integer userId);
+
+    // 如果购物车中所有商品都处于勾选状态 返回0 否则返回1
+    int selectCartProductCheckedStatusByUserId(Integer userId);
 }

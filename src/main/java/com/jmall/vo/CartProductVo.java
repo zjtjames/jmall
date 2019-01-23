@@ -16,7 +16,7 @@ public class CartProductVo {
     private String productMainImage;
     private BigDecimal productPrice; // 产品价格
     private Integer productStatus;
-    private BigDecimal productTotalPrice; // 这个产品在购物车中的总价
+    private BigDecimal productTotalPrice; // 当前产品在购物车中的总价
     private Integer productStock; //产品库存
     private Integer productChecked; // 产品是否勾选
 
