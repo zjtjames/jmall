@@ -24,4 +24,6 @@ public interface CartMapper {
 
     // 如果购物车中所有商品都处于勾选状态 返回0 否则返回1
     int selectCartProductCheckedStatusByUserId(Integer userId);
+
+    int deleteByUserIdProductIds(@Param("userId") Integer userId, @Param("productIdList")List<String> productIdList);
 }

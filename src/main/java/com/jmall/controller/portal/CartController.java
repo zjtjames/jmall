@@ -42,6 +42,18 @@ public class CartController {
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDescription());
         }
-        return null;
+        return iCartService.update(user.getId(), productId, count);
+    }
+
+    //删除购物车某个产品
+    @RequestMapping("delete_product.do")
+    @ResponseBody
+    // 可以一次删除多个 跟前端的约定 传一个字符串 用逗号分隔
+    public ServerResponse<CartVo> delete(HttpSession session, String productIds) {
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        if (user == null) {
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDescription());
+        }
+        return iCartService.deleteProduct(user.getId(), productIds);
     }
 }

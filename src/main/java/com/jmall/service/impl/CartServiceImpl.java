@@ -3,6 +3,7 @@
  */
 package com.jmall.service.impl;
 
+import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import com.jmall.common.Const;
 import com.jmall.common.ResponseCode;
@@ -57,7 +58,27 @@ public class CartServiceImpl implements ICartService {
     }
 
     public ServerResponse<CartVo> update(Integer userId, Integer productId, Integer count) {
+        if (productId == null || count == null) {
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDescription());
+        }
+        Cart cart = cartMapper.selectCartByUserIdProductId(userId, productId);
+        if (cart != null) {
+            cart.setQuantity(count);
+        }
+        cartMapper.updateByPrimaryKeySelective(cart);
+        CartVo cartVo = this.getCartVoLimit(userId);
+        return ServerResponse.createBySuccess(cartVo);
+    }
 
+    public ServerResponse<CartVo> deleteProduct(Integer userId, String productIds) {
+        List<String> productList = Splitter.on(",").splitToList(productIds);
+        if (CollectionUtils.isEmpty(productList)) {
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDescription());
+        }
+        cartMapper.deleteByUserIdProductIds(userId, productList);
+        // 获取最新的购物车并返回
+        CartVo cartVo = this.getCartVoLimit(userId);
+        return ServerResponse.createBySuccess(cartVo);
     }
 
     //核心方法 封装一个private方法 用List<Cart>对象拼接出CartVo
