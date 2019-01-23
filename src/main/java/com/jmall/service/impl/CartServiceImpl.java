@@ -53,8 +53,7 @@ public class CartServiceImpl implements ICartService {
             cart.setQuantity(count);
             cartMapper.updateByPrimaryKeySelective(cart);
         }
-        CartVo cartVo = this.getCartVoLimit(userId);
-        return ServerResponse.createBySuccess(cartVo);
+        return this.list(userId);
     }
 
     public ServerResponse<CartVo> update(Integer userId, Integer productId, Integer count) {
@@ -66,8 +65,7 @@ public class CartServiceImpl implements ICartService {
             cart.setQuantity(count);
         }
         cartMapper.updateByPrimaryKeySelective(cart);
-        CartVo cartVo = this.getCartVoLimit(userId);
-        return ServerResponse.createBySuccess(cartVo);
+        return this.list(userId);
     }
 
     public ServerResponse<CartVo> deleteProduct(Integer userId, String productIds) {
@@ -77,6 +75,15 @@ public class CartServiceImpl implements ICartService {
         }
         cartMapper.deleteByUserIdProductIds(userId, productList);
         // 获取最新的购物车并返回
+        return this.list(userId);
+    }
+
+    public ServerResponse<CartVo> selectOrUnSelectAll(Integer userId, Integer checked) {
+        cartMapper.checkedOrUncheckedAllPRoduct(userId, checked);
+        return this.list(userId);
+    }
+
+    public ServerResponse<CartVo> list(Integer userId) {
         CartVo cartVo = this.getCartVoLimit(userId);
         return ServerResponse.createBySuccess(cartVo);
     }

@@ -48,7 +48,7 @@ public class CartController {
     //删除购物车某个产品
     @RequestMapping("delete_product.do")
     @ResponseBody
-    // 可以一次删除多个 跟前端的约定 传一个字符串 用逗号分隔
+    // 可以一次删除多个 跟前端的约定 productIds传一个字符串 用逗号分隔
     public ServerResponse<CartVo> delete(HttpSession session, String productIds) {
         User user = (User) session.getAttribute(Const.CURRENT_USER);
         if (user == null) {
@@ -56,4 +56,44 @@ public class CartController {
         }
         return iCartService.deleteProduct(user.getId(), productIds);
     }
+
+    //购物车List列表
+    @RequestMapping("list.do")
+    @ResponseBody
+    public ServerResponse<CartVo> list(HttpSession session) {
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        if (user == null) {
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDescription());
+        }
+        return iCartService.list(user.getId());
+    }
+
+    //全选
+    @RequestMapping("select_all.do")
+    @ResponseBody
+    public ServerResponse<CartVo> selectAll(HttpSession session) {
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        if (user == null) {
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDescription());
+        }
+        return iCartService.selectOrUnSelectAll(user.getId(), Const.Cart.CHECKED);
+    }
+
+    //全反选
+    @RequestMapping("unselect_all.do")
+    @ResponseBody
+    public ServerResponse<CartVo> unSelectAll(HttpSession session) {
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        if (user == null) {
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDescription());
+        }
+        return iCartService.selectOrUnSelectAll(user.getId(), Const.Cart.UN_CHECKED);
+    }
+
+    //单独选
+    //单独反选
+
+    //查询当前用户购物车里产品总个数 而不是种类数
+
+
 }

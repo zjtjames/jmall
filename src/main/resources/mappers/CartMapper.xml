@@ -142,4 +142,11 @@
       </foreach>
     </if>
   </delete>
+
+  <update id="checkedOrUncheckedAllPRoduct" parameterType="map">
+    UPDATE jmall_cart
+    set checked = #{checked}
+    update_time = now()
+    where user_id = #{userId}
+  </update>
 </mapper>
