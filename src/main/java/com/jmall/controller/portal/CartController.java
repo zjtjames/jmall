@@ -76,24 +76,52 @@ public class CartController {
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDescription());
         }
-        return iCartService.selectOrUnSelectAll(user.getId(), Const.Cart.CHECKED);
+        return iCartService.selectOrUnSelect(user.getId(), null, Const.Cart.CHECKED);
     }
 
     //全反选
-    @RequestMapping("unselect_all.do")
+    @RequestMapping("un_select_all.do")
     @ResponseBody
     public ServerResponse<CartVo> unSelectAll(HttpSession session) {
         User user = (User) session.getAttribute(Const.CURRENT_USER);
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDescription());
         }
-        return iCartService.selectOrUnSelectAll(user.getId(), Const.Cart.UN_CHECKED);
+        return iCartService.selectOrUnSelect(user.getId(), null, Const.Cart.UN_CHECKED);
     }
 
-    //单独选
-    //单独反选
+    //单选
+    @RequestMapping("select.do")
+    @ResponseBody
+    public ServerResponse<CartVo> select(HttpSession session, Integer productId) {
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        if (user == null) {
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDescription());
+        }
+        return iCartService.selectOrUnSelect(user.getId(), productId, Const.Cart.CHECKED);
+    }
+
+    //单反选
+    @RequestMapping("un_select.do")
+    @ResponseBody
+    public ServerResponse<CartVo> unSelect(HttpSession session, Integer productId) {
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        if (user == null) {
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDescription());
+        }
+        return iCartService.selectOrUnSelect(user.getId(), productId, Const.Cart.UN_CHECKED);
+    }
 
     //查询当前用户购物车里产品总个数 而不是种类数
-
-
+    //全选
+    @RequestMapping("get_cart_product_count.do")
+    @ResponseBody
+    public ServerResponse<Integer> getCartProductCount(HttpSession session) {
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        //对于未登录的用户 显示购物车为空
+        if (user == null) {
+            return ServerResponse.createBySuccess(0);
+        }
+        return iCartService.getCartProductCount(user.getId());
+    }
 }
