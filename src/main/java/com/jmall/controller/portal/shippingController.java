@@ -1,7 +1,16 @@
 package com.jmall.controller.portal;
 
+import com.jmall.common.Const;
+import com.jmall.common.ResponseCode;
+import com.jmall.common.ServerResponse;
+import com.jmall.pojo.Shipping;
+import com.jmall.pojo.User;
+import com.jmall.service.IShippingService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.http.HttpSession;
 
 /**
  * Created by Zheng Jiateng on 2019/1/28.
@@ -10,4 +19,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/shipping/")
 public class shippingController {
+
+    @Autowired
+    private IShippingService iShippingService;
+
+    public ServerResponse add(HttpSession session, Shipping shipping) {
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        if (user == null) {
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDescription());
+        }
+
+    }
 }
