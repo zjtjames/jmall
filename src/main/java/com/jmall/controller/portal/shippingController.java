@@ -41,6 +41,7 @@ public class shippingController {
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDescription());
         }
-        return iShippingService.add(user.getId());
+        return iShippingService.delete(user.getId(), shippingId);
     }
+
 }

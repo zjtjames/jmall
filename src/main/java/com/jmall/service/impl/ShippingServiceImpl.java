@@ -33,7 +33,12 @@ public class ShippingServiceImpl implements IShippingService {
     }
 
     public ServerResponse delete(Integer userId, Integer shippingId) {
-
+        //为防止横向越权，需要检查userId是否与shippingId匹配，不能直接用deleteByPrimaryKey
+        int resultCount = shippingMapper.deleteByShippingIdUserId(shippingId, userId);
+        if (resultCount > 0) {
+            return ServerResponse.createBySuccessMessage("删除地址成功");
+        }
+        return ServerResponse.createByErrorMessage("删除地址失败");
     }
 }
 
