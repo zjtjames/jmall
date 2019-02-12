@@ -3,6 +3,7 @@
  */
 package com.jmall.controller.backend;
 
+import com.github.pagehelper.PageInfo;
 import com.jmall.common.Const;
 import com.jmall.common.ResponseCode;
 import com.jmall.common.ServerResponse;
@@ -85,7 +86,7 @@ public class ProductManageController {
 
     @RequestMapping(value = "list.do") // 产品list
     @ResponseBody //自动通过springmvc的jackson插件自动将返回值序列化为json
-    public ServerResponse getList(HttpSession session, @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum, @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
+    public ServerResponse<PageInfo> getList(HttpSession session, @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum, @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
         User user = (User) session.getAttribute(Const.CURRENT_USER);
         if (user == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录，请登录管理员");

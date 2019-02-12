@@ -1,5 +1,7 @@
 package com.jmall.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Maps;
 import com.jmall.common.ServerResponse;
 import com.jmall.dao.ShippingMapper;
@@ -8,6 +10,7 @@ import com.jmall.service.IShippingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -59,5 +62,12 @@ public class ShippingServiceImpl implements IShippingService {
         }
         return ServerResponse.createBySuccess("查询地址成功", shipping);
         }
+
+    public ServerResponse<PageInfo> list(Integer userId, int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<Shipping> shippingList = shippingMapper.selectByUserId(userId);
+        PageInfo pageInfo = new PageInfo(shippingList);
+        return ServerResponse.createBySuccess(pageInfo);
+    }
 }
 
