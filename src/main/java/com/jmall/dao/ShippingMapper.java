@@ -19,4 +19,6 @@ public interface ShippingMapper {
     int deleteByShippingIdUserId(@Param("shippingId") Integer shippingId, @Param("userId") Integer userId);
 
     int updateByShipping(Shipping record);
+
+    Shipping selectByShippingIdUserId(@Param("shippingId") Integer shippingId, @Param("userId") Integer userId);
 }

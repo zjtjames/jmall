@@ -195,4 +195,12 @@
     where id = #{id,jdbcType=INTEGER}
     and user_id = #{userId,jdbcType=INTEGER},
   </update>
+  
+  <select id="selectByShippingIdUserId" resultMap="BaseResultMap" parameterType="map">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM jmall_shipping
+    WHERE id = #{shippingId}
+    and user_id = #{userId}
+  </select>
 </mapper>

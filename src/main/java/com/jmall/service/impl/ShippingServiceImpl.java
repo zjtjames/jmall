@@ -50,5 +50,14 @@ public class ShippingServiceImpl implements IShippingService {
         }
         return ServerResponse.createByErrorMessage("更新地址失败");
     }
+
+    public ServerResponse<Shipping> select(Integer userId, Integer shippingId) {
+        //为防止横向越权，需要检查userId是否与shippingId匹配，不能直接用selectByPrimaryKey
+        Shipping shipping = shippingMapper.selectByShippingIdUserId(shippingId, userId);
+        if (shipping == null) {
+            return ServerResponse.createByErrorMessage("无法查询到该地址");
+        }
+        return ServerResponse.createBySuccess("查询地址成功", shipping);
+        }
 }
 
