@@ -40,5 +40,15 @@ public class ShippingServiceImpl implements IShippingService {
         }
         return ServerResponse.createByErrorMessage("删除地址失败");
     }
+
+    public ServerResponse update(Integer userId, Shipping shipping) {
+        // 更新的时候也要防止横向越权 这里userId要重新set 因为用户可能模拟userId去改别人的收货地址
+        shipping.setUserId(userId);
+        int resultCount = shippingMapper.updateByShipping(shipping);
+        if (resultCount > 0) {
+            return ServerResponse.createBySuccessMessage("更新地址成功");
+        }
+        return ServerResponse.createByErrorMessage("更新地址失败");
+    }
 }
 
